@@ -6,10 +6,23 @@ public class Ambience : MonoBehaviour
 {
     [SerializeField] private AudioSource audioSource;
 
-    [Range(0,2)][SerializeField] private float defaultPitch;
-    [Range(0,2)][SerializeField] private float minPitch;
-    [Range(0,2)][SerializeField] private float maxPitch; 
-    [Range(1,6)][SerializeField] private float speed;
+
+    [SerializeField]
+    [Range(0,2)] 
+    private float defaultPitch;
+
+    [Range(0,2)] 
+    [SerializeField]
+    private float minPitch;
+
+    [Range(0,2)] 
+    [SerializeField]
+    private float maxPitch; 
+
+    [Range(1,6)] 
+    [SerializeField]
+    private float speed;
+
 
     private float t = 0;
     private float newPitch;
@@ -32,6 +45,7 @@ public class Ambience : MonoBehaviour
             {
                 t = 0;  
                 newPitch = Random.Range(minPitch, maxPitch);
+                
             }
         }
     }
