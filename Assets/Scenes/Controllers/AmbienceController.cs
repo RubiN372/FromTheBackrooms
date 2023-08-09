@@ -30,7 +30,7 @@ public class Ambience : MonoBehaviour
             t += speed * Time.deltaTime;   
             if(t > 1.0f)
             {
-                t = 0;
+                t = 0;  
                 newPitch = Random.Range(minPitch, maxPitch);
             }
         }
