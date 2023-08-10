@@ -30,10 +30,11 @@ public class Ambience : MonoBehaviour
                 newPitch = Random.Range(minPitch, maxPitch);
                 finishedLerping = true;
             }
-        else{
-             finishedLerping = false;   
-            audioSource.pitch = Mathf.Lerp(audioSource.pitch, newPitch, t);
-            t += speed * Time.deltaTime;  
-        }
+            else
+            {
+                finishedLerping = false;   
+                audioSource.pitch = Mathf.Lerp(audioSource.pitch, newPitch, t);
+                t += speed * Time.deltaTime;  
+            }
     }
 }
