@@ -5,23 +5,10 @@ using UnityEngine;
 public class Ambience : MonoBehaviour
 {
     [SerializeField] private AudioSource audioSource;
-
-
-    [SerializeField]
-    [Range(0,2)] 
-    private float defaultPitch;
-
-    [Range(0,2)] 
-    [SerializeField]
-    private float minPitch;
-
-    [Range(0,2)] 
-    [SerializeField]
-    private float maxPitch; 
-
-    [Range(1,6)] 
-    [SerializeField]
-    private float speed;
+    [SerializeField] private float defaultPitch;
+    [SerializeField] private float minPitch;
+    [SerializeField] private float maxPitch; 
+    [SerializeField] private float speed;
 
 
     private float t = 0;
@@ -36,17 +23,17 @@ public class Ambience : MonoBehaviour
     
     void Update()
     {
-        if(finishedLerping)
-        {
-            finishedLerping = false;
-            audioSource.pitch = Mathf.Lerp(audioSource.pitch, newPitch, t);
-            t += speed * Time.deltaTime;   
+        
             if(t > 1.0f)
             {
-                t = 0;  
+                t = 0f;  
                 newPitch = Random.Range(minPitch, maxPitch);
-                
+                finishedLerping = true;
             }
+        else{
+             finishedLerping = false;   
+            audioSource.pitch = Mathf.Lerp(audioSource.pitch, newPitch, t);
+            t += speed * Time.deltaTime;  
         }
     }
 }
