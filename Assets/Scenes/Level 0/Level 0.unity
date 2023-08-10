@@ -3964,7 +3964,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!50 &174734937
 Rigidbody2D:
   serializedVersion: 4
@@ -8089,7 +8089,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 2.109375
+  orthographic size: 1.6171875
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
