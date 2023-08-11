@@ -17,7 +17,7 @@ public class MonsterEnemyAI : MonoBehaviour
     bool reachedEndOfPath = false;
     Seeker seeker;
     Rigidbody2D rb;
-    Vector2 direction = new Vector2(0,0);
+    Vector2 direction = new(0,0);
 
     
 
