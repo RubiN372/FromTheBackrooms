@@ -16,23 +16,16 @@ public class FlashlightSwitch : MonoBehaviour
         flashLight.enabled = false;
     }
 
-    public bool ContainsFlashlight()
-    {
-        if (Inventory.instance.ContainsItemOfName("Flashlight"))
-            return true;
-        return false;
-    }
-
-    public void RemoveFlashlight()
+    public void DisableFlashlight()
     {
         isOn = false;
         flashLight.enabled = false;
         flashLightBackLight.enabled = false;
     }
 
-    public void EnableFlashlight()
+    public void SwitchFlashlight()
     {
-        if (ContainsFlashlight())
+        if (Inventory.instance.ContainsItemOfName("Flashlight"))
         {
             isOn = !isOn;
             flashLight.enabled = isOn;
@@ -56,7 +49,7 @@ public class FlashlightSwitch : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            EnableFlashlight();
+            SwitchFlashlight();
         }
     }
 }

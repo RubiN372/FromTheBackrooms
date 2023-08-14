@@ -15,5 +15,5 @@ MonoBehaviour:
   name: Flashlight
   icon: {fileID: 21300000, guid: 9969e6cdbf3e4da44b812ce8468029a4, type: 3}
   itemPrefab: {fileID: 1324000149110924534, guid: d23da58430f9d294c8c12d5449942104, type: 3}
-  iconWidth: 50
-  iconHeight: 100
+  iconWidth: 100
+  iconHeight: 45
