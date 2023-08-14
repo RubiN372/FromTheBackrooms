@@ -4,15 +4,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class ThrowFlashlight : MonoBehaviour
-{   
+{
     [SerializeField] private FlashlightSwitch flashlightSwitch;
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            if(Inventory.instance.ContainsItemOfName("Flashlight"))
+            if (flashlightSwitch.isOn)
             {
-                if(flashlightSwitch.isOn)
+                if (Inventory.instance.ContainsItemOfName("Flashlight"))
                 {
                     
                 }

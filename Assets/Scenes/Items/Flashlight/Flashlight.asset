@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49e02fe0d9391c04ea6f7b77f4b5de7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 56fec16f7ff6333488b75249a6f53c7b, type: 3}
   m_Name: Flashlight
   m_EditorClassIdentifier: 
   name: Flashlight
@@ -17,3 +17,4 @@ MonoBehaviour:
   itemPrefab: {fileID: 1324000149110924534, guid: d23da58430f9d294c8c12d5449942104, type: 3}
   iconWidth: 100
   iconHeight: 45
+  ThrowedFlashlight: {fileID: 1324000149110924534, guid: f8a3d73f23037b74dab80fae9c31b810, type: 3}
