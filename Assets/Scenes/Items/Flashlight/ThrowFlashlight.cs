@@ -28,8 +28,9 @@ public class ThrowFlashlight : MonoBehaviour
 
                     // Calculate the direction between the flashlight's position and the mouse position
                     Vector3 direction = mouseWorldPosition - transform.position;
-                    rigidbody.AddForce(direction*80);
-                    rigidbody.AddTorque(10f);
+                    
+                    rigidbody.AddForce(direction*40);
+                    rigidbody.AddTorque(2f);
                 }
             }
         }
