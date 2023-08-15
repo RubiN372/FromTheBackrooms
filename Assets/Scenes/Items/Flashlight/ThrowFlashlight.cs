@@ -7,6 +7,8 @@ public class ThrowFlashlight : MonoBehaviour
 {
     public FlashlightSwitch flashlightSwitch;
     public Camera mainCam;
+    [SerializeField] private float throwForce;
+    [SerializeField] private float spinForce;
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
@@ -28,9 +30,9 @@ public class ThrowFlashlight : MonoBehaviour
 
                     // Calculate the direction between the flashlight's position and the mouse position
                     Vector3 direction = mouseWorldPosition - transform.position;
-                    
-                    rigidbody.AddForce(direction*40);
-                    rigidbody.AddTorque(2f);
+
+                    rigidbody.AddForce(direction * throwForce);
+                    rigidbody.AddTorque(spinForce);
                 }
             }
         }
