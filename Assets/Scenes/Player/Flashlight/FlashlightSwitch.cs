@@ -1,19 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 public class FlashlightSwitch : MonoBehaviour
 {
-    public bool isOn = false;
+
     public Light2D flashLight;
     public Light2D flashLightBackLight;
     public AudioClip flashLightOnSound;
 
+    public bool isOn = false;
 
     private void Awake()
     {
         flashLight.enabled = false;
+        isOn = false;
     }
 
     public void DisableFlashlight()

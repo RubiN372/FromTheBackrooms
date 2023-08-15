@@ -5,16 +5,31 @@ using UnityEngine;
 
 public class ThrowFlashlight : MonoBehaviour
 {
-    [SerializeField] private FlashlightSwitch flashlightSwitch;
+    public FlashlightSwitch flashlightSwitch;
+    public Camera mainCam;
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (flashlightSwitch.isOn)
+            Item item = Inventory.instance.FindItemWithName("Flashlight");
+
+            if (item != null && item.GetType() == typeof(Flashlight))
             {
-                if (Inventory.instance.ContainsItemOfName("Flashlight"))
+                Flashlight flashlight = (Flashlight)item;
+
+                if (flashlightSwitch.isOn)
                 {
-                    
+                    GameObject throwedFlashlight = flashlight.Throw();
+                    Rigidbody2D rigidbody = throwedFlashlight.GetComponent<Rigidbody2D>();
+
+                    Vector3 mousePosition = Input.mousePosition;
+                    mousePosition.z = mainCam.nearClipPlane; // Set the z coordinate to the near clip plane of the camera
+                    Vector3 mouseWorldPosition = mainCam.ScreenToWorldPoint(mousePosition);
+
+                    // Calculate the direction between the flashlight's position and the mouse position
+                    Vector3 direction = mouseWorldPosition - transform.position;
+                    rigidbody.AddForce(direction*80);
+                    rigidbody.AddTorque(10f);
                 }
             }
         }

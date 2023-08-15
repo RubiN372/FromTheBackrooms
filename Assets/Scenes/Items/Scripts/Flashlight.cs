@@ -11,11 +11,6 @@ public class Flashlight : Item
         Vector2 pos = GameManager.instance.player.transform.position;
         return Instantiate(itemPrefab, GameManager.instance.player.transform.position, itemPrefab.transform.rotation);
     }
-
-    public override void Use()
-    {
-        Throw();
-    }
     
     public GameObject Throw()
     {

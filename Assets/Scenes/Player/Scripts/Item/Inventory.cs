@@ -60,4 +60,16 @@ public class Inventory : MonoBehaviour
         }
         return false;
     }
+
+    public Item FindItemWithName(string name)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].name == name)
+            {
+                return items[i];
+            }
+        }
+        return null;
+    }
 }
