@@ -1,5 +1,4 @@
-    using System.Collections;
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -24,12 +23,12 @@ public class LightFlickerEffect : MonoBehaviour
     void Update()
     {
         if (CanFlick)
-        {   
+        {
             if (isFlickering == false)
             {
                 StartCoroutine(FlickeringLight());
             }
-           
+
         }
         else if (!coroutineIsRunning)
         {
@@ -55,7 +54,7 @@ public class LightFlickerEffect : MonoBehaviour
     IEnumerator FlickDelay()
     {
         coroutineIsRunning = true;
-        
+
         yield return new WaitForSeconds(delayBetween + Random.Range(1, 5));
         SoundInstance.InstantiateOnPos(flickerSound, transform.position, 0.5f, true);
         CanFlick = true;
@@ -64,7 +63,4 @@ public class LightFlickerEffect : MonoBehaviour
         CanFlick = false;
         coroutineIsRunning = false;
     }
-
- 
-
 }
