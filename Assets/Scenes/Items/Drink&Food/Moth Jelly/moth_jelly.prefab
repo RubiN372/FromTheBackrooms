@@ -54,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 908d79952cc41704c835cb1ecc1527fc, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,7 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPickable: 1
   item: {fileID: 11400000, guid: 8a9fa5ae0e5afc249a7b0bc78d0ba307, type: 2}
-  ItemPickupManager: {fileID: 0}
 --- !u!61 &6180322640568921094
 BoxCollider2D:
   m_ObjectHideFlags: 0
