@@ -5,8 +5,8 @@ using Pathfinding;
 
 public class SmilerAI : MonoBehaviour
 {
-    public Transform target;
-
+    private Transform target = null;
+    
     [SerializeField] private float maxSpeed;
     [SerializeField] private float acceleration = 50f;
     [SerializeField] private float nextWaypointDistance = 3f;
@@ -19,6 +19,7 @@ public class SmilerAI : MonoBehaviour
     Seeker seeker;
     Rigidbody2D rb;
     Vector2 direction = new(0, 0);
+    private int playerLayer;
 
     public Path GetPath()
     {
@@ -27,6 +28,7 @@ public class SmilerAI : MonoBehaviour
 
     void Start()
     {
+        playerLayer = LayerMask.GetMask("Player");
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
 
@@ -36,7 +38,6 @@ public class SmilerAI : MonoBehaviour
     void UpdatePath()
     {
         RaycastHit2D hit = Physics2D.CircleCast(gameObject.transform.position, 12, direction, 12, 10);
-        Debug.Log(hit.collider.gameObject.name);
         if (hit.collider != null)
         {
             if (hit.distance <= detectRange)

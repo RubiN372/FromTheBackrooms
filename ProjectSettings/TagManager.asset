@@ -14,7 +14,7 @@ TagManager:
   - Item
   - 
   - 
-  - 
+  - Entity
   - Player
   - Post Processing
   - 
@@ -41,10 +41,7 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Map
-    uniqueID: 2194292347
-    locked: 0
-  - name: Player
+  - name: Environment
     uniqueID: 2767642599
     locked: 0
   - name: UI
