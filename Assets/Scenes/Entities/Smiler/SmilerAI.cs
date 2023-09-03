@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using System;
 
 public class SmilerAI : MonoBehaviour
 {
@@ -35,23 +36,35 @@ public class SmilerAI : MonoBehaviour
         InvokeRepeating("UpdatePath", 0f, 0.2f);
     }
 
+    private void ResetVelocity()
+    {
+        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
+    }
+
     void UpdatePath()
     {
-        RaycastHit2D hit = Physics2D.CircleCast(gameObject.transform.position, 12, direction, 12, 10);
-        if (hit.collider != null)
+        Collider2D collider = Physics2D.OverlapCircle(transform.position, 1f, 10);
+        if (collider != null)
         {
-            if (hit.distance <= detectRange)
+            if (Vector2.Distance(transform.position, GameManager.instance.player.transform.position) <= detectRange)
             {
                 target = GameManager.instance.player.transform;
+                Debug.Log("Detected");
+                seeker.StartPath(rb.position, target.position, OnPathComplete);
             }
-            else
-            {
+            else{
                 target = null;
+                currentPath = null;
+                ResetVelocity();
             }
         }
+        else
+        {
+            target = null;
+            currentPath = null;
+            ResetVelocity();
+        }
 
-        if (seeker.IsDone() && target != null)
-            seeker.StartPath(rb.position, target.position, OnPathComplete);
 
     }
 
