@@ -12,7 +12,6 @@ public class SmilerAI : MonoBehaviour
     [SerializeField] private float acceleration = 50f;
     [SerializeField] private float nextWaypointDistance = 3f;
     [SerializeField] private float detectRange = 5f;
-    [SerializeField] private float forgiveRange = 15f;
     [SerializeField] private SmilerAnimationController smilerAnimationController;
 
     Path currentPath;
