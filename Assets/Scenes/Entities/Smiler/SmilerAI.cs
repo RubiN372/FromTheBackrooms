@@ -7,12 +7,13 @@ using System;
 public class SmilerAI : MonoBehaviour
 {
     private Transform target = null;
-    
+
     [SerializeField] private float maxSpeed;
     [SerializeField] private float acceleration = 50f;
     [SerializeField] private float nextWaypointDistance = 3f;
     [SerializeField] private float detectRange = 5f;
     [SerializeField] private float forgiveRange = 15f;
+    [SerializeField] private SmilerAnimationController smilerAnimationController;
 
     Path currentPath;
     int currentWaypoint = 0;
@@ -21,6 +22,7 @@ public class SmilerAI : MonoBehaviour
     Rigidbody2D rb;
     Vector2 direction = new(0, 0);
     private int playerLayer;
+    public bool isChasing = false; 
 
     public Path GetPath()
     {
@@ -36,37 +38,56 @@ public class SmilerAI : MonoBehaviour
         InvokeRepeating("UpdatePath", 0f, 0.2f);
     }
 
-    private void ResetVelocity()
-    {
-        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
-    }
+   void UpdatePath()
+{
+    ContactFilter2D playerFilter;
+    playerFilter.layerMask = playerLayer;
 
-    void UpdatePath()
+    Collider2D[] playerColliders = Physics2D.OverlapCircleAll(transform.position, detectRange, playerLayer);
+    Collider2D[] flashlightColliders = Physics2D.OverlapCircleAll(transform.position, detectRange, LayerMask.GetMask("Item"));
+
+    bool foundPlayer = false;  
+
+    if (playerColliders != null && playerColliders.Length > 0)
     {
-        Collider2D collider = Physics2D.OverlapCircle(transform.position, 1f, 10);
-        if (collider != null)
+        for (int i = 0; i <= playerColliders.Length; i++)
         {
-            if (Vector2.Distance(transform.position, GameManager.instance.player.transform.position) <= detectRange)
+            if (Vector2.Distance(transform.position, playerColliders[i].transform.position) <= detectRange && playerColliders[i].CompareTag("Player"))
             {
-                target = GameManager.instance.player.transform;
-                Debug.Log("Detected");
-                seeker.StartPath(rb.position, target.position, OnPathComplete);
-            }
-            else{
-                target = null;
                 currentPath = null;
-                ResetVelocity();
+                target = GameManager.instance.player.transform;
+                seeker.StartPath(rb.position, target.position, OnPathComplete);
+                foundPlayer = true;
+                isChasing = true;
+                smilerAnimationController.target = playerColliders[i].transform;
+                break;
             }
         }
-        else
-        {
-            target = null;
-            currentPath = null;
-            ResetVelocity();
-        }
-
-
     }
+
+    if (!foundPlayer)
+    {
+        target = null;  
+        isChasing = false;
+        smilerAnimationController.target = null;
+    }
+    
+    if (flashlightColliders != null && flashlightColliders.Length > 0)
+    {
+        for (int i = 0; i < flashlightColliders.Length; i++)
+        {
+            if (flashlightColliders[i].gameObject.CompareTag("ThrowedFlashlight"))
+            {
+                isChasing = true;
+                smilerAnimationController.target = flashlightColliders[i].transform;
+                currentPath = null;
+                target = flashlightColliders[i].gameObject.transform;
+                seeker.StartPath(rb.position, target.position, OnPathComplete);
+                break;
+            }
+        }
+    }
+}
 
     void OnPathComplete(Path newPath)
     {

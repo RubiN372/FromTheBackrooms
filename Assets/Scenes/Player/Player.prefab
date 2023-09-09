@@ -174,7 +174,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 908d79952cc41704c835cb1ecc1527fc, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -192,7 +192,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -2100674949
+  m_SortingLayerID: -1527324697
   m_SortingLayer: 1
   m_SortingOrder: 5
   m_Sprite: {fileID: 1167432427, guid: 7bf03cdc38bedb94d8c4852054de3d84, type: 3}
@@ -419,6 +419,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupRadius: 0.85
+  itemLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &7266630046551527640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,6 +437,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f9da5cdfd06c374ba7844230236c3d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onItemChangedTrigger:
+    m_PersistentCalls:
+      m_Calls: []
   items: []
   space: 12
 --- !u!1 &4449339114772829879
@@ -573,10 +582,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 390ee98b54e5c35449e0c05433cc2dd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOn: 0
   flashLight: {fileID: 6642967846235892360}
   flashLightBackLight: {fileID: 1292369712678394694}
   flashLightOnSound: {fileID: 8300000, guid: 159d2f174fc3a354bbc9fa34059a7773, type: 3}
+  isOn: 0
 --- !u!1 &7272586380605745858
 GameObject:
   m_ObjectHideFlags: 0
