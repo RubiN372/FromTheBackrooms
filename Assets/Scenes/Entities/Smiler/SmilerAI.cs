@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 using System;
+using Unity.VisualScripting;
 
 public class SmilerAI : MonoBehaviour
 {
@@ -13,6 +14,13 @@ public class SmilerAI : MonoBehaviour
     [SerializeField] private float nextWaypointDistance = 3f;
     [SerializeField] private float detectRange = 5f;
     [SerializeField] private SmilerAnimationController smilerAnimationController;
+    [SerializeField] private JumpscareController jumpscareController;
+    [SerializeField] private Sprite jumpscareFaceSprite;
+    [SerializeField] private Vector3 jumpscareMinScale;
+    [SerializeField] private Vector3 jumpscareMaxScale;
+    [SerializeField] private float jumpscareDuration;
+    [SerializeField] private float jumpscareAfterDuration;
+    [SerializeField] private AudioClip jumpscareSound; 
 
     Path currentPath;
     int currentWaypoint = 0;
@@ -126,6 +134,15 @@ public class SmilerAI : MonoBehaviour
         if (distance < nextWaypointDistance)
         {
             currentWaypoint++;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.collider.CompareTag("Player"))
+        {
+            jumpscareController.Jumpscare(jumpscareFaceSprite, jumpscareMinScale, jumpscareMaxScale, jumpscareDuration, jumpscareAfterDuration, jumpscareSound);
+            gameObject.SetActive(false);
         }
     }
 }
