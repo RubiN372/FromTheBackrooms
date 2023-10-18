@@ -59,6 +59,7 @@ public class SmilerAI : MonoBehaviour
     {
         for (int i = 0; i <= playerColliders.Length; i++)
         {
+            Debug.Log(i);
             if (Vector2.Distance(transform.position, playerColliders[i].transform.position) <= detectRange && playerColliders[i].CompareTag("Player"))
             {
                 currentPath = null;
