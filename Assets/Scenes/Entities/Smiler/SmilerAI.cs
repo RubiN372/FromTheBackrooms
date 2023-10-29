@@ -4,12 +4,24 @@ using UnityEngine;
 using Pathfinding;
 using System;
 using Unity.VisualScripting;
+using System.ComponentModel.Design;
+using Unity.VisualScripting.Dependencies.Sqlite;
+using UnityEngine.Diagnostics;
+using CodeMonkey.Utils;
+using Unity.Mathematics;
+using UnityEngine.UIElements;
 
 public class SmilerAI : MonoBehaviour
 {
-    private Transform target = null;
+    private enum State{
+        Wandering,
+        Chasing,
+    }
+    private State state;
+    Vector3 target;
 
-    [SerializeField] private float maxSpeed;
+    #region Monster Settings
+    [SerializeField] private float speed;
     [SerializeField] private float acceleration = 50f;
     [SerializeField] private float nextWaypointDistance = 3f;
     [SerializeField] private float detectRange = 5f;
@@ -20,8 +32,8 @@ public class SmilerAI : MonoBehaviour
     [SerializeField] private Vector3 jumpscareMaxScale;
     [SerializeField] private float jumpscareDuration;
     [SerializeField] private float jumpscareAfterDuration;
-    [SerializeField] private AudioClip jumpscareSound; 
-
+    [SerializeField] private AudioClip jumpscareSound;
+    #endregion
     Path currentPath;
     int currentWaypoint = 0;
     bool reachedEndOfPath = false;
@@ -29,13 +41,10 @@ public class SmilerAI : MonoBehaviour
     Rigidbody2D rb;
     Vector2 direction = new(0, 0);
     private int playerLayer;
-    public bool isChasing = false; 
+    public bool isChasing = false;
+    private bool isCoroutineRunning = false;
 
-    public Path GetPath()
-    {
-        return currentPath;
-    }
-
+    #region Start
     void Start()
     {
         playerLayer = LayerMask.GetMask("Player");
@@ -44,44 +53,46 @@ public class SmilerAI : MonoBehaviour
 
         InvokeRepeating("UpdatePath", 0f, 0.2f);
     }
-
-   void UpdatePath()
-{
-    ContactFilter2D playerFilter;
-    playerFilter.layerMask = playerLayer;
-
-    Collider2D[] playerColliders = Physics2D.OverlapCircleAll(transform.position, detectRange, playerLayer);
-    Collider2D[] flashlightColliders = Physics2D.OverlapCircleAll(transform.position, detectRange, LayerMask.GetMask("Item"));
-
-    bool foundPlayer = false;  
-
-    if (playerColliders != null && playerColliders.Length > 0)
+    #endregion
+    private void Awake()
     {
-        for (int i = 0; i <= playerColliders.Length; i++)
+        state = State.Wandering;
+    }
+    private void CheckForPlayers()
+    {
+        Collider2D[] playerColliders = Physics2D.OverlapCircleAll(transform.position, detectRange, playerLayer);
+
+        if (playerColliders == null || playerColliders.Length <= 0)
         {
-            Debug.Log(i);
+            isChasing = false;
+            return;
+        }
+
+        for (int i = 0; i < playerColliders.Length; i++)
+        {
             if (Vector2.Distance(transform.position, playerColliders[i].transform.position) <= detectRange && playerColliders[i].CompareTag("Player"))
             {
                 currentPath = null;
-                target = GameManager.instance.player.transform;
-                seeker.StartPath(rb.position, target.position, OnPathComplete);
-                foundPlayer = true;
                 isChasing = true;
                 smilerAnimationController.target = playerColliders[i].transform;
-                break;
+                target = playerColliders[i].transform.position;
+                state = State.Chasing;
+                return;
             }
         }
-    }
-
-    if (!foundPlayer)
-    {
-        target = null;  
         isChasing = false;
-        smilerAnimationController.target = null;
     }
     
-    if (flashlightColliders != null && flashlightColliders.Length > 0)
+    private void CheckForFlashLights()
     {
+        Collider2D[] flashlightColliders = Physics2D.OverlapCircleAll(transform.position, detectRange, LayerMask.GetMask("Item"));
+
+        if (flashlightColliders == null || flashlightColliders.Length <= 0)
+        {
+            return;
+        }
+           
+        
         for (int i = 0; i < flashlightColliders.Length; i++)
         {
             if (flashlightColliders[i].gameObject.CompareTag("ThrowedFlashlight"))
@@ -89,13 +100,61 @@ public class SmilerAI : MonoBehaviour
                 isChasing = true;
                 smilerAnimationController.target = flashlightColliders[i].transform;
                 currentPath = null;
-                target = flashlightColliders[i].gameObject.transform;
-                seeker.StartPath(rb.position, target.position, OnPathComplete);
-                break;
+                target = flashlightColliders[i].transform.position;
+                state = State.Chasing;
+                return;
             }
         }
     }
-}
+    
+    IEnumerator WanderingCoroutine()
+    {
+        while (state == State.Wandering && ! isCoroutineRunning)
+        {
+            isCoroutineRunning = true;
+            Vector3 position = transform.position + UtilsClass.GetRandomDir() * UnityEngine.Random.Range(3,4); 
+            seeker.StartPath(rb.position, position, OnPathComplete);
+            yield return new WaitForSeconds(3f);  
+            isCoroutineRunning = false;
+        }
+    }
+
+    private void MakeDash()
+    {
+
+    }
+    void UpdatePath()
+    {
+        switch(state)
+        {
+            case State.Wandering:
+                StartCoroutine(WanderingCoroutine());
+                CheckForPlayers();
+                CheckForFlashLights();
+            break;
+
+
+            case State.Chasing:
+                StopCoroutine(WanderingCoroutine());
+                seeker.StartPath(rb.position, target, OnPathComplete);
+
+                CheckForPlayers();
+                CheckForFlashLights();
+
+                if(isChasing == false)
+                {
+                    state = State.Wandering;
+                }
+            break;
+        }  
+
+    }
+
+    #region fUpdateMovement
+    public Path GetPath()
+    {
+        return currentPath;
+    }
 
     void OnPathComplete(Path newPath)
     {
@@ -125,9 +184,9 @@ public class SmilerAI : MonoBehaviour
         Vector2 force = acceleration * Time.deltaTime * direction.normalized;
 
         rb.AddForce(force);
-        if (rb.velocity.magnitude > maxSpeed)
+        if (rb.velocity.magnitude > speed)
         {
-            rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, speed);
         }
 
         float distance = Vector2.Distance(rb.position, currentPath.vectorPath[currentWaypoint]);
@@ -137,13 +196,14 @@ public class SmilerAI : MonoBehaviour
             currentWaypoint++;
         }
     }
-
+    #endregion
     void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.collider.CompareTag("Player"))
+        if (col.collider.CompareTag("Player"))
         {
             jumpscareController.Jumpscare(jumpscareFaceSprite, jumpscareMinScale, jumpscareMaxScale, jumpscareDuration, jumpscareAfterDuration, jumpscareSound);
             gameObject.SetActive(false);
         }
     }
+
 }
