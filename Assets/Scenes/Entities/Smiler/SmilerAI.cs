@@ -1,15 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
-using System;
-using Unity.VisualScripting;
-using System.ComponentModel.Design;
-using Unity.VisualScripting.Dependencies.Sqlite;
-using UnityEngine.Diagnostics;
 using CodeMonkey.Utils;
-using Unity.Mathematics;
-using UnityEngine.UIElements;
+
 
 public class SmilerAI : MonoBehaviour
 {

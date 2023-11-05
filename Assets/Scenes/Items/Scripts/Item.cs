@@ -16,7 +16,6 @@ public class Item : ScriptableObject
 
     public virtual GameObject Drop()
     {
-        Vector2 pos = GameManager.instance.player.transform.position;
         return Instantiate(itemPrefab, GameManager.instance.player.transform.position, itemPrefab.transform.rotation);
     }
 }

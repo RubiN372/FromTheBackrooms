@@ -18,3 +18,4 @@ MonoBehaviour:
   iconWidth: 100
   iconHeight: 45
   ThrowedFlashlight: {fileID: 1324000149110924534, guid: f8a3d73f23037b74dab80fae9c31b810, type: 3}
+  FlashlightLight: {fileID: 7197916389163657149, guid: 5650d2321eb84b1429fcde56c07e551b, type: 3}
