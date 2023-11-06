@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3a325629f46bad4aadf4baa05f7935b, type: 3}
+  m_Name: SheetOfPaper2
+  m_EditorClassIdentifier: 
+  name: Sheet of paper
+  icon: {fileID: 21300000, guid: 805054fe59c1fe94fbd59f025174644a, type: 3}
+  itemPrefab: {fileID: 8019097282867308640, guid: 24904715273c8984382e754a6e2ae1e0, type: 3}
+  iconWidth: 100
+  iconHeight: 100
+  paperUISprite: {fileID: 0}

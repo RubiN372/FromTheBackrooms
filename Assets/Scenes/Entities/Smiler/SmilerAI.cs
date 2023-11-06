@@ -102,7 +102,7 @@ public class SmilerAI : MonoBehaviour
     
     IEnumerator WanderingCoroutine()
     {
-        while (state == State.Wandering && ! isCoroutineRunning)
+        while (state == State.Wandering && !isCoroutineRunning)
         {
             isCoroutineRunning = true;
             Vector3 position = transform.position + UtilsClass.GetRandomDir() * UnityEngine.Random.Range(3,4); 
