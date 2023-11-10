@@ -46,8 +46,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _Density: 0.37
-    - _Intensity: 0.754
-    - _NoiseScale: 51.2
+    - _Intensity: 0.504
+    - _NoiseScale: 50.28
     - _OutsideIntensity: 4.2
     - _OutsideScale: 1
     - _Scale2: 0

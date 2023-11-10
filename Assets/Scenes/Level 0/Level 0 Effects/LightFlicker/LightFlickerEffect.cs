@@ -56,7 +56,7 @@ public class LightFlickerEffect : MonoBehaviour
         coroutineIsRunning = true;
 
         yield return new WaitForSeconds(delayBetween + Random.Range(1, 5));
-        SoundInstance.InstantiateOnPos(flickerSound, transform.position, 0.5f, true);
+        SoundInstance.InstantiateOnPos(flickerSound, transform.position, 0.2f, true);
         CanFlick = true;
         yield return new WaitForSeconds(flickeringDuration);
 
