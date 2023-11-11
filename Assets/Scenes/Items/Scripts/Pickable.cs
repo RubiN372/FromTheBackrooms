@@ -10,7 +10,7 @@ public class Pickable : MonoBehaviour
 
     private void OnMouseDown() { 
 
-        if(GameManager.instance.player.GetComponent<ItemPickup>().PickupItem(item, transform.position))
+        if(GameManager.instance.player.GetComponent<ItemInteract>().PickupItem(item, transform.position))
         {
             Destroy(gameObject);
         }
