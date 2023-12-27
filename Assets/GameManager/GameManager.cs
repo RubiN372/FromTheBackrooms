@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     #region Singleton
     public static GameManager instance;
+    public ObjectViewUI objectViewUI;
 
     private void Awake()
     {
@@ -26,6 +27,11 @@ public class GameManager : MonoBehaviour
     {
         players.Add(newPlayer);
         Debug.Log("Player added");
+    }
+
+    public ObjectViewUI GetViewedObject()
+    {
+        return objectViewUI;
     }
 
     public void RemovePlayer(GameObject playerToRemove)

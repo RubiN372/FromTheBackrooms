@@ -5,8 +5,9 @@ using UnityEngine.Scripting;
 
 public class PlayerController : MonoBehaviour
 {
-    private void Start()
+    private void Awake()
     {
         GameManager.instance.AddPlayer(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 }

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7bb89b76738f64a9108b1582534d6c, type: 3}
+  m_Name: document1
+  m_EditorClassIdentifier: 
+  name: MEG Document
+  icon: {fileID: 21300000, guid: 138d532542746c44c9290d68aee73270, type: 3}
+  itemPrefab: {fileID: 1684708439875310351, guid: 753c49708fec90044adf09afdd036756, type: 3}
+  iconWidth: 100
+  iconHeight: 100
+  paperUISprite: {fileID: 21300000, guid: 516828e5bc5c09445b1f18bb4493a6eb, type: 3}
+  sixeX: 1000
+  sizeY: 1200

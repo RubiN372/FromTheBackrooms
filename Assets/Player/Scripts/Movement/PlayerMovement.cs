@@ -11,6 +11,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] StaminaController staminaController;
     Rigidbody2D rb;
     Vector2 movement;
+
+    public void ResetVelocity()
+    {
+        rb.velocity = new Vector2(0,0);
+    }
     
     void Start()
     {
