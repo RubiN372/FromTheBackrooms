@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> players = new List<GameObject>();
     public GameObject player;
+    public GameObject uiCanvas;
     public void AddPlayer(GameObject newPlayer)
     {
         players.Add(newPlayer);

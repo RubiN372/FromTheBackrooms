@@ -54,11 +54,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Fog_Size: 42.85
+    - Fog_Size: 22.19
     - Fog_Size_2: 139.05
     m_Colors:
-    - Color_2: {r: 0.9245283, g: 0.9245283, b: 0.9245283, a: 1}
-    - Speed: {r: 0.01, g: 0.01, b: 0, a: 0}
+    - Color_2: {r: 0.34854925, g: 0.34854925, b: 0.34854925, a: 1}
+    - Speed: {r: 0.02, g: 0.08, b: 0, a: 0}
     - Speed_2: {r: 0.0004, g: 0, b: 0, a: 0}
-    - _Color: {r: 17.532349, g: 17.532349, b: 17.532349, a: 1}
+    - _Color: {r: 15.8133955, g: 15.8133955, b: 15.8133955, a: 1}
   m_BuildTextureStacks: []

@@ -10,7 +10,7 @@ using System;
 
         MusicsStore Storage;
 
-        bool saved = true;
+        //bool saved = true;
 
         [MenuItem("Tools/SoundInstance/Game Musics Window")]
         public static void ShowWindow()

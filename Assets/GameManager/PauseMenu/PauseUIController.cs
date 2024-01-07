@@ -7,6 +7,7 @@ public class PauseUIController : MonoBehaviour
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] InventoryUI inventoryUI;
     public static bool isPaused {get; private set;} = false;
+    public static bool canPause = true;
 
     void Start()
     {
@@ -30,7 +31,9 @@ public class PauseUIController : MonoBehaviour
     }
     public void Pause()
     {
-         isPaused = true;
+        if(!canPause)
+            return;
+        isPaused = true;
         pauseUI.SetActive(true);
         SetActiveComponents(false);
         Time.timeScale = 0f;

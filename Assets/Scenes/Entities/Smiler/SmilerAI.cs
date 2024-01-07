@@ -29,7 +29,7 @@ public class SmilerAI : MonoBehaviour
     #endregion
     Path currentPath;
     int currentWaypoint = 0;
-    bool reachedEndOfPath = false;
+    //bool reachedEndOfPath = false;
     Seeker seeker;
     Rigidbody2D rb;
     Vector2 direction = new(0, 0);
@@ -165,12 +165,12 @@ public class SmilerAI : MonoBehaviour
 
         if (currentWaypoint >= currentPath.vectorPath.Count)
         {
-            reachedEndOfPath = true;
+            //reachedEndOfPath = true;
             return;
         }
         else
         {
-            reachedEndOfPath = false;
+            //reachedEndOfPath = false;
         }
 
         Vector2 direction = ((Vector2)currentPath.vectorPath[currentWaypoint] - rb.position).normalized;

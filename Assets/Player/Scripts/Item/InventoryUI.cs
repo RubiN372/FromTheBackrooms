@@ -17,7 +17,7 @@ public class InventoryUI : MonoBehaviour
     }
 
     public void Update() {
-        if(Input.GetKeyDown(KeyCode.E))
+        if(Input.GetKeyDown(KeyCode.Tab))
         {
             inventoryUI.SetActive(!inventoryUI.activeSelf);
         }

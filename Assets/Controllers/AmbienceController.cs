@@ -13,7 +13,6 @@ public class Ambience : MonoBehaviour
 
     private float t = 0;
     private float newPitch;
-    private bool finishedLerping = true;
     
     void Start()
     {
@@ -23,18 +22,15 @@ public class Ambience : MonoBehaviour
     
     void Update()
     {
-        
-            if(t > 1.0f)
-            {
-                t = 0f;  
-                newPitch = Random.Range(minPitch, maxPitch);
-                finishedLerping = true;
-            }
-            else
-            {
-                finishedLerping = false;   
-                audioSource.pitch = Mathf.Lerp(audioSource.pitch, newPitch, t);
-                t += speed * Time.deltaTime;  
-            }
+        if(t > 1.0f)
+        {
+            t = 0f;  
+            newPitch = Random.Range(minPitch, maxPitch);
+        }
+        else
+        { 
+            audioSource.pitch = Mathf.Lerp(audioSource.pitch, newPitch, t);
+            t += speed * Time.deltaTime;  
+        }
     }
 }
