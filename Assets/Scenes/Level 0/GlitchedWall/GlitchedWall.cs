@@ -8,7 +8,6 @@ public class GlitchedWall : MonoBehaviour
     public LightSwitchController lightSwitch2;
     public LightSwitchController lightSwitch3;
 
-    // Checks for light switches state if they are on or off
     public void CheckForState()
     {
         if(!lightSwitch1.isOn && lightSwitch2.isOn && lightSwitch3.isOn)

@@ -9,15 +9,17 @@ public class InventoryUI : MonoBehaviour
     InventorySlot[] slots;
     public GameObject inventoryUI;
 
-    private void Start() {
+    private void Start()
+    {
         inventory = Inventory.instance;
         inventory.onItemChangedCallback += UpdateUI;
 
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
     }
 
-    public void Update() {
-        if(Input.GetKeyDown(KeyCode.Tab))
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             inventoryUI.SetActive(!inventoryUI.activeSelf);
         }
@@ -27,10 +29,12 @@ public class InventoryUI : MonoBehaviour
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if(i < inventory.items.Count)
+            if (i < inventory.items.Count)
             {
                 slots[i].AddItem(inventory.items[i]);
-            }else{
+            }
+            else
+            {
                 slots[i].ClearSlot();
             }
         }

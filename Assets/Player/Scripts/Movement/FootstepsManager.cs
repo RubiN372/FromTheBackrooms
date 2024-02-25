@@ -1,6 +1,3 @@
-using System;
-using System.Numerics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class FootstepsManager : MonoBehaviour
@@ -12,34 +9,35 @@ public class FootstepsManager : MonoBehaviour
     [SerializeField] StaminaController staminaController;
     [SerializeField] ParticleSystem dust;
 
-    UnityEngine.Vector3 lastPos;
+    Vector3 lastPos;
     float distanceTravelled;
-
-    void CreateDust()
-    {
-        dust.Play();
-    }
 
     void Start()
     {
         lastPos = transform.position;
         distanceTravelled = 0;
     }
+
     void Update()
     {
         distanceTravelled += (lastPos - transform.position).magnitude;
-        if(distanceTravelled >= distanceToMakeSound)
+
+        if (distanceTravelled >= distanceToMakeSound)
         {
-            if(staminaController.isSprinting)
+            if (staminaController.isSprinting)
             {
-                SoundInstance.InstantiateOnTransform(sprintingSounds[UnityEngine.Random.Range(0, sprintingSounds.Length)], transform, volume, true, SoundInstance.Randomization.NoRandomization);
+                SoundInstance.InstantiateOnTransform(sprintingSounds[Random.Range(0, sprintingSounds.Length)], transform, volume, true, SoundInstance.Randomization.NoRandomization);
                 dust.Play();
-            }else{
-                SoundInstance.InstantiateOnTransform(walkingSounds[UnityEngine.Random.Range(0, walkingSounds.Length)], transform, volume, true, SoundInstance.Randomization.NoRandomization);
+            }
+
+            else
+            {
+                SoundInstance.InstantiateOnTransform(walkingSounds[Random.Range(0, walkingSounds.Length)], transform, volume, true, SoundInstance.Randomization.NoRandomization);
             }
 
             distanceTravelled = 0;
         }
+
         lastPos = transform.position;
     }
 }

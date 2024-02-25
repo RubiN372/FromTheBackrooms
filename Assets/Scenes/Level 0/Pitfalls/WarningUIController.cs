@@ -15,13 +15,12 @@ public class PitfallsUIManager : MonoBehaviour
 
     private IEnumerator WarningFlash()
     {
-        while(true)
+        while (true)
         {
             warningSprite.enabled = true;
             yield return new WaitForSeconds(shownTime);
             warningSprite.enabled = false;
             yield return new WaitForSeconds(flashingSpeed);
         }
-        
     }
 }

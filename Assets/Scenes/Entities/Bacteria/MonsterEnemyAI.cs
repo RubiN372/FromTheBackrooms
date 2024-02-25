@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;  
+using Pathfinding;
 
 public class MonsterEnemyAI : MonoBehaviour
 {
     public Transform target;
-    
+
 
     [SerializeField] private float maxSpeed;
     [SerializeField] private float acceleration = 50f;
@@ -17,16 +15,16 @@ public class MonsterEnemyAI : MonoBehaviour
     //bool reachedEndOfPath = false;
     Seeker seeker;
     Rigidbody2D rb;
-    Vector2 direction = new(0,0);
+    Vector2 direction = new(0, 0);
 
-    
+
 
     public Path GetPath()
     {
         return currentPath;
     }
-    
-    
+
+
 
 
     void Start()
@@ -34,30 +32,32 @@ public class MonsterEnemyAI : MonoBehaviour
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
 
-        InvokeRepeating("UpdatePath", 0f, 0.2f); 
+        InvokeRepeating("UpdatePath", 0f, 0.2f);
     }
 
     void UpdatePath()
     {
-        RaycastHit2D hit = Physics2D.CircleCast(gameObject.transform.position, 12, direction, 12, 10 );
-        if(hit.collider != null)
+        RaycastHit2D hit = Physics2D.CircleCast(gameObject.transform.position, 12, direction, 12, 10);
+        if (hit.collider != null)
         {
-            if(hit.distance <= detectRange)
+            if (hit.distance <= detectRange)
             {
                 target = GameManager.instance.player.transform;
-            }else{
+            }
+            else
+            {
                 target = null;
             }
         }
 
-        if(seeker.IsDone() && target != null)
-            seeker.StartPath(rb.position, target.position, OnPathComplete); 
-        
+        if (seeker.IsDone() && target != null)
+            seeker.StartPath(rb.position, target.position, OnPathComplete);
+
     }
 
     void OnPathComplete(Path newPath)
     {
-        if(!newPath.error)
+        if (!newPath.error)
         {
             currentPath = newPath;
             currentWaypoint = 0;
@@ -66,14 +66,15 @@ public class MonsterEnemyAI : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(currentPath == null)
+        if (currentPath == null)
             return;
-        
-        if(currentWaypoint >= currentPath.vectorPath.Count)
+
+        if (currentWaypoint >= currentPath.vectorPath.Count)
         {
             //reachedEndOfPath = true;
             return;
-        }else
+        }
+        else
         {
             //reachedEndOfPath = false;
         }
@@ -82,14 +83,14 @@ public class MonsterEnemyAI : MonoBehaviour
         Vector2 force = direction * acceleration * Time.deltaTime;
 
         rb.AddForce(force);
-        if(rb.velocity.magnitude > maxSpeed)
+        if (rb.velocity.magnitude > maxSpeed)
         {
             rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
         }
 
         float distance = Vector2.Distance(rb.position, currentPath.vectorPath[currentWaypoint]);
 
-        if(distance < nextWaypointDistance)
+        if (distance < nextWaypointDistance)
         {
             currentWaypoint++;
         }

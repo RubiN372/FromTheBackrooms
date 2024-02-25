@@ -11,8 +11,9 @@ public class WarningController : MonoBehaviour
 
     void OnTriggerExit2D()
     {
-        if(warningUI == null)
+        if (warningUI == null)
             return;
+
         Destroy(warningUI);
     }
 }

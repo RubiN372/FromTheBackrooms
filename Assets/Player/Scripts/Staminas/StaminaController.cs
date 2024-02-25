@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,41 +7,39 @@ public class StaminaController : MonoBehaviour
     [SerializeField] private float maxStamina = 100;
     public float playerStamina;
     public float sprintMultiplier = 3f;
-    [Range(0, 50)]  [SerializeField] private float staminaDrain = 0.5f;
-    [Range(0, 50)]  [SerializeField] private float staminaRegen = 0.5f;  
+    [Range(0, 50)][SerializeField] private float staminaDrain = 0.5f;
+    [Range(0, 50)][SerializeField] private float staminaRegen = 0.5f;
     public bool hasRegenerated = true;
     public bool isSprinting;
     [SerializeField] private Image bar;
-
     [SerializeField] private PlayerMovement playerMovement;
 
-    // Update is called once per frame
     void Update()
     {
-        if(!isSprinting)
+        if (!isSprinting && playerStamina <= maxStamina - 0.01f)
         {
-            if(playerStamina <= maxStamina - 0.01f)
-            {
-                playerStamina += staminaRegen * Time.deltaTime;
-                UpdateStamina(1);
+            playerStamina += staminaRegen * Time.deltaTime;
+            UpdateStamina(1);
 
-                if(playerStamina >= maxStamina - 0.01f)
-                {
-                    hasRegenerated = true;  
-                    playerStamina = maxStamina;
-                }
+            if (playerStamina >= maxStamina - 0.01f)
+            {
+                hasRegenerated = true;
+                playerStamina = maxStamina;
             }
         }
     }
 
     public void AddStamina(float value)
     {
-        if(playerStamina + value > maxStamina)
+        if (playerStamina + value > maxStamina)
         {
             playerStamina = maxStamina;
-        }else{
+        }
+        else
+        {
             playerStamina += value;
         }
+
         UpdateStamina(1);
     }
 
@@ -54,13 +50,13 @@ public class StaminaController : MonoBehaviour
 
     public void Sprinting()
     {
-        if(hasRegenerated)
+        if (hasRegenerated)
         {
             isSprinting = true;
             playerStamina -= staminaDrain * Time.deltaTime;
             UpdateStamina(1);
 
-            if(playerStamina <= 0)
+            if (playerStamina <= 0)
             {
                 hasRegenerated = false;
             }

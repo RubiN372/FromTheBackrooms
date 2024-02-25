@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 public class FlashlightSwitch : MonoBehaviour
 {
-
     public AudioClip flashLightOnSound;
 
     private GameObject holdedFlashlight;
@@ -23,14 +19,14 @@ public class FlashlightSwitch : MonoBehaviour
 
     public void SetHoldedFlashlight(GameObject Holdedflashlight)
     {
-        if(holdedFlashlight != null)
+        if (holdedFlashlight != null)
         {
             holdedFlashlight.GetComponent<Light2D>().enabled = false;
             isOn = false;
             holdedFlashlight = null;
             Destroy(holdedFlashlightInstance);
         }
-        
+
         holdedFlashlight = Holdedflashlight;
         holdedFlashlightInstance = Instantiate(holdedFlashlight, transform);
         Debug.Log("Selected flashlight: " + Holdedflashlight);

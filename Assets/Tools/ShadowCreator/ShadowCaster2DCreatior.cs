@@ -49,7 +49,7 @@ public class ShadowCaster2DCreator : MonoBehaviour
 			shadowCaster.transform.parent = gameObject.transform;
 			ShadowCaster2D shadowCasterComponent = shadowCaster.AddComponent<ShadowCaster2D>();
 			shadowCasterComponent.selfShadows = this.selfShadows;
-			
+
 			Vector3[] testPath = new Vector3[pathVertices.Length];
 			for (int j = 0; j < pathVertices.Length; j++)
 			{
@@ -61,13 +61,9 @@ public class ShadowCaster2DCreator : MonoBehaviour
 			meshField.SetValue(shadowCasterComponent, new Mesh());
 			generateShadowMeshMethod.Invoke(shadowCasterComponent, new object[] { meshField.GetValue(shadowCasterComponent), shapePathField.GetValue(shadowCasterComponent) });
 
-			
+
 		}
 	}
-
-
-
-
 
 	public void DestroyOldShadowCasters()
 	{

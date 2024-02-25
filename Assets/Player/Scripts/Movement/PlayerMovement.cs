@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,32 +9,39 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rb;
     Vector2 movement;
 
-    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
+
     void Update()
     {
-        if(Input.GetKey(KeyCode.LeftShift) && staminaController.playerStamina > 0 && staminaController.hasRegenerated)
+        if (Input.GetKey(KeyCode.LeftShift) && staminaController.playerStamina > 0 && staminaController.hasRegenerated)
         {
-             movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * speed * staminaController.sprintMultiplier;
-             if(movement.sqrMagnitude > 0) 
-             {
+            movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * speed * staminaController.sprintMultiplier;
+
+            if (movement.sqrMagnitude > 0)
+            {
                 staminaController.Sprinting();
                 animator.SetBool("Sprinting", true);
-             }else{
+            }
+
+            else
+            {
                 staminaController.isSprinting = false;
                 animator.SetBool("Sprinting", false);
-             }
+            }
 
-        }else
-        {
-             movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * speed;
-             
-             staminaController.isSprinting = false;
-             animator.SetBool("Sprinting", false);
         }
+
+        else
+        {
+            movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * speed;
+
+            staminaController.isSprinting = false;
+            animator.SetBool("Sprinting", false);
+        }
+
         rb.velocity = movement;
 
         animator.SetFloat("Speed", movement.sqrMagnitude);

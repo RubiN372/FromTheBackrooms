@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Flashlight_rotation : MonoBehaviour
 {
     public float speed = 1f;
     public Camera mainCam;
-    
 
     void Start()
     {
@@ -17,7 +13,7 @@ public class Flashlight_rotation : MonoBehaviour
     void Update()
     {
         Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = mainCam.nearClipPlane; 
+        mousePosition.z = mainCam.nearClipPlane;
         Vector3 mouseWorldPosition = mainCam.ScreenToWorldPoint(mousePosition);
 
         Vector3 direction = mouseWorldPosition - transform.position;

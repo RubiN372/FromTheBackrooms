@@ -8,10 +8,10 @@ public class InventorySlot : MonoBehaviour
     public Button useButton;
     public GameObject player;
 
-    public void AddItem (Item newItem)
+    public void AddItem(Item newItem)
     {
         item = newItem;
-        
+
         icon.sprite = item.icon;
         icon.enabled = true;
         removeButton.interactable = true;
@@ -30,13 +30,13 @@ public class InventorySlot : MonoBehaviour
 
     public void OnRemoveButton()
     {
-        item.Drop(); 
+        item.Drop();
         Inventory.instance.Remove(item);
     }
 
     public void UseItem()
     {
-        if(item != null)
+        if (item != null)
         {
             item.Use();
         }

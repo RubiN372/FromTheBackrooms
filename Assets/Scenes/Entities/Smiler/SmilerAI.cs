@@ -3,10 +3,10 @@ using UnityEngine;
 using Pathfinding;
 using CodeMonkey.Utils;
 
-
 public class SmilerAI : MonoBehaviour
 {
-    private enum State{
+    private enum State
+    {
         Wandering,
         Chasing,
     }
@@ -29,7 +29,7 @@ public class SmilerAI : MonoBehaviour
     #endregion
     Path currentPath;
     int currentWaypoint = 0;
-    //bool reachedEndOfPath = false;
+    // bool reachedEndOfPath = false;
     Seeker seeker;
     Rigidbody2D rb;
     Vector2 direction = new(0, 0);
@@ -73,9 +73,10 @@ public class SmilerAI : MonoBehaviour
                 return;
             }
         }
+
         isChasing = false;
     }
-    
+
     private void CheckForFlashLights()
     {
         Collider2D[] flashlightColliders = Physics2D.OverlapCircleAll(transform.position, detectRange, LayerMask.GetMask("Item"));
@@ -84,8 +85,7 @@ public class SmilerAI : MonoBehaviour
         {
             return;
         }
-           
-        
+
         for (int i = 0; i < flashlightColliders.Length; i++)
         {
             if (flashlightColliders[i].gameObject.CompareTag("ThrowedFlashlight"))
@@ -99,15 +99,15 @@ public class SmilerAI : MonoBehaviour
             }
         }
     }
-    
+
     IEnumerator WanderingCoroutine()
     {
         while (state == State.Wandering && !isCoroutineRunning)
         {
             isCoroutineRunning = true;
-            Vector3 position = transform.position + UtilsClass.GetRandomDir() * UnityEngine.Random.Range(3,4); 
+            Vector3 position = transform.position + UtilsClass.GetRandomDir() * UnityEngine.Random.Range(3, 4);
             seeker.StartPath(rb.position, position, OnPathComplete);
-            yield return new WaitForSeconds(3f);  
+            yield return new WaitForSeconds(3f);
             isCoroutineRunning = false;
         }
     }
@@ -116,16 +116,16 @@ public class SmilerAI : MonoBehaviour
     {
 
     }
+
     void UpdatePath()
     {
-        switch(state)
+        switch (state)
         {
             case State.Wandering:
                 StartCoroutine(WanderingCoroutine());
                 CheckForPlayers();
                 CheckForFlashLights();
-            break;
-
+                break;
 
             case State.Chasing:
                 StopCoroutine(WanderingCoroutine());
@@ -134,13 +134,12 @@ public class SmilerAI : MonoBehaviour
                 CheckForPlayers();
                 CheckForFlashLights();
 
-                if(isChasing == false)
+                if (isChasing == false)
                 {
                     state = State.Wandering;
                 }
-            break;
-        }  
-
+                break;
+        }
     }
 
     #region fUpdateMovement
@@ -189,7 +188,9 @@ public class SmilerAI : MonoBehaviour
             currentWaypoint++;
         }
     }
+
     #endregion
+
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.collider.CompareTag("Player"))

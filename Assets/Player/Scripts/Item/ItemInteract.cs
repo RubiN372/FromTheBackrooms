@@ -5,7 +5,7 @@ public class ItemInteract : MonoBehaviour
     [SerializeField] private float interactRadius = 0.85f;
     [SerializeField] private LayerMask itemLayer;
     [SerializeField] private LayerMask interactableLayer;
-    [SerializeField] private LayerMask obstacleLayer; 
+    [SerializeField] private LayerMask obstacleLayer;
 
     public bool PickupItem(Item item, Vector2 pos)
     {
@@ -14,7 +14,6 @@ public class ItemInteract : MonoBehaviour
         if (distance < interactRadius)
         {
             Vector2 direction = pos - (Vector2)transform.position;
-
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction.normalized, distance, itemLayer);
 
             if (hit.collider != null)
@@ -32,6 +31,7 @@ public class ItemInteract : MonoBehaviour
                 }
             }
         }
+
         return false;
     }
 
@@ -41,24 +41,20 @@ public class ItemInteract : MonoBehaviour
 
         if (distance < interactRadius)
         {
-            Debug.Log("halo1");
             Vector2 direction = pos - (Vector2)transform.position;
-
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction.normalized, distance, interactableLayer);
 
             if (hit.collider != null)
             {
-                Debug.Log("halo2");
-
-                Debug.Log("halo3");
                 IInteractable interactable = gm.GetComponent<IInteractable>();
-                if(interactable == null)
+                if (interactable == null)
                     return false;
 
-                interactable.Interact();    
+                interactable.Interact();
                 return true;
             }
         }
+
         return false;
     }
 }

@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 public class JumpscareController : MonoBehaviour
 {
-   [SerializeField] GameObject faceUI;
-   [SerializeField] GameObject backgroundUI;
-   private bool jumpscareRunning = false;
+    [SerializeField] GameObject faceUI;
+    [SerializeField] GameObject backgroundUI;
+    private bool jumpscareRunning = false;
     private IEnumerator PlayJumpscare(float duration, float afterDuration, Vector3 minScale, Vector3 maxScale, RectTransform rectTransform)
     {
         float elapsedTime = 0f;
@@ -30,19 +30,20 @@ public class JumpscareController : MonoBehaviour
         jumpscareRunning = false;
     }
 
-   public void Jumpscare(Sprite face, Vector3 minScale, Vector3 maxScale, float duration, float afterDuration, AudioClip sound)
-   {
-        if(!jumpscareRunning && face != null && duration > 0 && sound != null)
+    public void Jumpscare(Sprite face, Vector3 minScale, Vector3 maxScale, float duration, float afterDuration, AudioClip sound)
+    {
+        if (!jumpscareRunning && face != null && duration > 0 && sound != null)
         {
             jumpscareRunning = true;
 
             faceUI.SetActive(true);
             backgroundUI.SetActive(true);
             faceUI.GetComponent<Image>().sprite = face;
-            RectTransform rectTransform = faceUI.GetComponent<RectTransform>(); 
-            
+            RectTransform rectTransform = faceUI.GetComponent<RectTransform>();
+
             SoundInstance.InstantiateOnTransform(sound, GameManager.instance.player.transform, 1, true);
             StartCoroutine(PlayJumpscare(duration, afterDuration, minScale, maxScale, rectTransform));
         }
-   }
+    }
+
 }
