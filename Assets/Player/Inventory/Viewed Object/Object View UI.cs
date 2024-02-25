@@ -1,5 +1,4 @@
 using UnityEngine.UI;
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 public class ObjectViewUI : MonoBehaviour
