@@ -92,12 +92,15 @@ public class PitfallsManager : MonoBehaviour
 
     void Update()
     {
-        DoCursorMovement();
-        if (cursorValue < minCursorValue || cursorValue > maxCursorValue)
-            Fall();
+        if(minigameStarted)
+        {
+            DoCursorMovement();
+            if (cursorValue < minCursorValue || cursorValue > maxCursorValue)
+                Fall();
 
-        if (minigameStarted)
-            HandleInput();
+            if (minigameStarted)
+                HandleInput();
+        }
     }
 
     private void StartMinigame()

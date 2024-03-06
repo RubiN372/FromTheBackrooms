@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: DefaultCompany
   productName: From the Backrooms
-  defaultCursor: {fileID: 0}
+  defaultCursor: {fileID: 2800000, guid: 708e7bb5a058e0c4193d270c760d8c8d, type: 3}
   cursorHotspot: {x: -0.5, y: -0.5}
   m_SplashScreenBackgroundColor: {r: 0.03773582, g: 0.03773582, b: 0.009754351, a: 1}
   m_ShowUnitySplashScreen: 1
