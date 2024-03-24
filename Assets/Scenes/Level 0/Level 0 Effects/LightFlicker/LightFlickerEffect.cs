@@ -6,6 +6,8 @@ public class LightFlickerEffect : MonoBehaviour
 {
     public bool isFlickering = false;
     public float delayBetween;
+    public float randomDelayMin;
+    public float randomDelayMax;
     public float flickeringDuration;
     public AudioClip flickerSound;
     [SerializeField] bool playSound = true;
@@ -56,7 +58,7 @@ public class LightFlickerEffect : MonoBehaviour
     {
         coroutineIsRunning = true;
 
-        yield return new WaitForSeconds(delayBetween + Random.Range(1, 5));
+        yield return new WaitForSeconds(delayBetween + Random.Range(randomDelayMin, randomDelayMax));
         if(playSound)
             SoundInstance.InstantiateOnPos(flickerSound, transform.position, 0.2f, true);
         CanFlick = true;
