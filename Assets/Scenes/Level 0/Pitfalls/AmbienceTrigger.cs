@@ -10,22 +10,24 @@ public class AmbienceTrigger : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] float volumeTransitionTime;
     [SerializeField] float volumeDecreaseStrength;
-    //GameObject player;
+    GameObject player;
     AudioSource levelAmbience;
-    //bool isCoroutineRunning;
-    //float defaultVolume;
+    float defaultVolume;
+    Coroutine changeVolumeCoroutine;
 
 
     void Start()
     {
-     //   player = GameManager.instance.player;
-    //    levelAmbience = player.GetComponentInChildren<AudioSource>();
-       // defaultVolume = levelAmbience.volume;
+        player = GameManager.instance.player;
+        levelAmbience = player.GetComponentInChildren<AudioSource>();
+        defaultVolume = levelAmbience.volume;
     }
     void OnTriggerEnter2D()
     {
-    //    StopCoroutine("ChangeVolume");
-     //   StartCoroutine(ChangeVolume(levelAmbience.volume - volumeDecreaseStrength));
+        if (changeVolumeCoroutine != null)
+            StopCoroutine(changeVolumeCoroutine);
+        if(levelAmbience.isActiveAndEnabled)
+            changeVolumeCoroutine = StartCoroutine(ChangeVolume(levelAmbience.volume - volumeDecreaseStrength));
 
         if (!wasTriggered)
         {
@@ -36,11 +38,13 @@ public class AmbienceTrigger : MonoBehaviour
 
     void OnTriggerExit2D()
     {
-     //   StopCoroutine("ChangeVolume");
-       // StartCoroutine(ChangeVolume(defaultVolume));
+        if (changeVolumeCoroutine != null)
+            StopCoroutine(changeVolumeCoroutine);
+        if(levelAmbience.isActiveAndEnabled)
+            changeVolumeCoroutine = StartCoroutine(ChangeVolume(defaultVolume));
     }
 
-  /*  IEnumerator ChangeVolume(float targetVolume)
+    IEnumerator ChangeVolume(float targetVolume)
     {
         float timeElapsed = 0f;
 
@@ -53,5 +57,4 @@ public class AmbienceTrigger : MonoBehaviour
         }
         levelAmbience.volume = targetVolume;
     }
-    */
 }

@@ -1,5 +1,8 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class PitfallsManager : MonoBehaviour
 {
@@ -29,10 +32,55 @@ public class PitfallsManager : MonoBehaviour
     [Header("Left Field")]
     [SerializeField] float minValue2;
     [SerializeField] float maxValue2;
+
+    [Header("Post Processing")]
+    [SerializeField] Volume volume;
+    [SerializeField] float vignetteIntensity;
+    [SerializeField] float vignetteSmoothness;
+    [SerializeField] float lensDistortionIntensity;
+    [SerializeField] float chromaticAberrationIntensity;
+    [SerializeField] float contrastIntensity;
+    [SerializeField] float transitionSpeed;
+
+    private float originalIntensity;
+    private float originalSmoothness;
+    private float originalDistortion;
+    private float originalAberration;
+    private float originalContrast;
+
+    Vignette vignette;
+    LensDistortion lensDistortion;
+    ChromaticAberration chromaticAberration;
+    ColorAdjustments colorAdjustments;
+
     void Start()
     {
         player = GameManager.instance.player;
         animator = player.GetComponent<Animator>();
+
+        if (volume.profile.TryGet(out Vignette vignette1))
+        {
+            originalIntensity = vignette1.intensity.value;
+            originalSmoothness = vignette1.smoothness.value;
+            vignette = vignette1;
+        }
+
+        if (volume.profile.TryGet(out LensDistortion lensDistortion1))
+        {
+            originalDistortion = lensDistortion1.intensity.value;
+            lensDistortion = lensDistortion1;
+        }
+
+        if (volume.profile.TryGet(out ChromaticAberration chromaticAberration1))
+        {
+            originalAberration = chromaticAberration1.intensity.value;
+            chromaticAberration = chromaticAberration1;
+        }
+
+        if (volume.profile.TryGet(out ColorAdjustments colorAdjustments1))
+        {
+            originalContrast = colorAdjustments1.contrast.value;
+        }
     }
 
     private void DoCursorMovement()
@@ -92,7 +140,7 @@ public class PitfallsManager : MonoBehaviour
 
     void Update()
     {
-        if(minigameStarted)
+        if (minigameStarted)
         {
             DoCursorMovement();
             if (cursorValue < minCursorValue || cursorValue > maxCursorValue)
@@ -140,7 +188,43 @@ public class PitfallsManager : MonoBehaviour
         player.GetComponent<PlayerMovement>().enabled = enablePlayerMovement;
         if (pitfallsUI != null)
             Destroy(pitfallsUI);
-        this.enabled = false;
+        enabled = false;
+    }
+
+    IEnumerator PostProccesingEffects(bool lerpToOriginal)
+    {
+        float timeElapsed = 0f;
+        if (lerpToOriginal)
+        {
+            while (timeElapsed < transitionSpeed)
+            {
+                vignette.intensity.value = Mathf.Lerp(vignette.intensity.value, originalIntensity, timeElapsed / transitionSpeed);
+                vignette.smoothness.value = Mathf.Lerp(vignette.smoothness.value, originalSmoothness, timeElapsed / transitionSpeed);
+                lensDistortion.intensity.value = Mathf.Lerp(lensDistortion.intensity.value, originalDistortion, timeElapsed / transitionSpeed);
+                chromaticAberration.intensity.value = Mathf.Lerp(chromaticAberration.intensity.value, originalAberration, timeElapsed / transitionSpeed);
+                colorAdjustments.contrast.value = Mathf.Lerp(colorAdjustments.contrast.value, originalContrast, timeElapsed / transitionSpeed);
+
+                timeElapsed += Time.deltaTime;
+
+                yield return null;
+            }
+        }
+        else
+        {
+            while (timeElapsed < transitionSpeed)
+            {
+                vignette.intensity.value = Mathf.Lerp(vignette.intensity.value, vignetteIntensity, timeElapsed / transitionSpeed);
+                vignette.smoothness.value = Mathf.Lerp(vignette.smoothness.value, vignetteSmoothness, timeElapsed / transitionSpeed);
+                lensDistortion.intensity.value = Mathf.Lerp(lensDistortion.intensity.value, lensDistortionIntensity, timeElapsed / transitionSpeed);
+                chromaticAberration.intensity.value = Mathf.Lerp(chromaticAberration.intensity.value, chromaticAberrationIntensity, timeElapsed / transitionSpeed);
+                colorAdjustments.contrast.value = Mathf.Lerp(colorAdjustments.contrast.value, contrastIntensity, timeElapsed / transitionSpeed);
+
+                timeElapsed += Time.deltaTime;
+
+                yield return null;
+            }
+        }
+
     }
 
     public void OnTriggerEnter2D()
