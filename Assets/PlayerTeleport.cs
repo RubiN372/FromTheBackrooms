@@ -1,34 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerTeleport : MonoBehaviour
 {
     [SerializeField] Transform teleportPos;
     [SerializeField] CinemachineVirtualCamera cmVCam;
+    [SerializeField] Vector2 teleportOffset;
+    [SerializeField] int howManyToActivate;
+    [SerializeField] bool deactivateAfterTeleport;
+    int activatedCount = 0;
+
     
-
-    public void OnTriggerEnter2D()
+    // seamless player teleportation to different location
+    public void OnTriggerEnter2D(Collider2D other)
     {
-        GameObject player = GameManager.instance.player;
-        
-        // position difference from middle of green box 
-        float playerXDifference = gameObject.transform.position.x - player.transform.position.x; 
-        float playerYDifference = gameObject.transform.position.y - player.transform.position.y; 
+        activatedCount++;
+        if(activatedCount == howManyToActivate)
+        {
+             GameObject player = GameManager.instance.player;
 
-        // new position hehe based on where do you walk into that box  
-        Transform newTeleportPos = teleportPos; 
-        newTeleportPos.position = new Vector2(teleportPos.position.x - playerXDifference, teleportPos.position.y - playerYDifference);
-        newTeleportPos.position = new Vector2(newTeleportPos.position.x , newTeleportPos.position.y );
+            Transform newTeleportPos = teleportPos; 
+            newTeleportPos.position = new Vector2(player.transform.position.x + teleportOffset.x , player.transform.position.y + teleportOffset.y);
 
-        // thing that somehow prevents smooth camera transition when teleported
-        Vector2 delta = newTeleportPos.position - player.transform.position;
-        cmVCam.OnTargetObjectWarped(newTeleportPos, delta);
-        cmVCam.PreviousStateIsValid = false;
-
-
-        // actual teleporting
-        player.transform.position = newTeleportPos.position;
+            Vector2 delta = newTeleportPos.position - player.transform.position;
+            player.transform.position = newTeleportPos.position;
+            int numVcams = CinemachineCore.Instance.VirtualCameraCount;
+            for (int i = 0; i < numVcams; ++i)
+                CinemachineCore.Instance.GetVirtualCamera(i).OnTargetObjectWarped(player.transform, delta);
+        }
+       
     }
 }
