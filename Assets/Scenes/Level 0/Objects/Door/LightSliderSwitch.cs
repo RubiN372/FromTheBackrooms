@@ -25,7 +25,7 @@ public class LightSliderSwitch : MonoBehaviour
 
     void Start()
     {
-        if(volume.profile.TryGet(out FilmGrain filmGrain))
+        if (volume.profile.TryGet(out FilmGrain filmGrain))
         {
             originalGrainIntensity = filmGrain.intensity.value;
             originalResponse = filmGrain.response.value;
@@ -34,14 +34,15 @@ public class LightSliderSwitch : MonoBehaviour
 
     void OnMouseDown()
     {
-        if(!uiIsActive)
+        if (!uiIsActive)
         {
             sliderUIprefab = Instantiate(lightSliderUIprefab, GameManager.instance.uiCanvas.transform);
             uiIsActive = true;
             PauseUIController.canPause = false;
             GameManager.instance.player.GetComponent<PlayerMovement>().enabled = false;
+            GameManager.instance.player.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
 
-            if(volume.profile.TryGet(out FilmGrain filmGrain))
+            if (volume.profile.TryGet(out FilmGrain filmGrain))
             {
                 filmGrain.type.value = FilmGrainLookup.Medium4;
                 filmGrain.response.value = 1;
@@ -51,41 +52,41 @@ public class LightSliderSwitch : MonoBehaviour
 
     void Update()
     {
-        if(uiIsActive)
+        if (uiIsActive)
         {
-            if(sliderUIprefab != null)
+            if (sliderUIprefab != null)
                 currentValue = sliderUIprefab.GetComponentInChildren<Slider>().value;
-            
-            if(currentValue >= correctValue - correctValueSize && currentValue <= correctValue + correctValueSize)
+
+            if (currentValue >= correctValue - correctValueSize && currentValue <= correctValue + correctValueSize)
                 StartCoroutine(CheckValue());
             else
                 StopCoroutine(CheckValue());
-            
+
             float proximity = 1f - Mathf.Abs(currentValue - correctValue);
             audioSource.volume = proximity;
 
-            if(Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 uiIsActive = false;
                 Destroy(sliderUIprefab);
                 PauseUIController.canPause = true;
                 GameManager.instance.player.GetComponent<PlayerMovement>().enabled = true;
             }
-            if(volume.profile.TryGet(out FilmGrain filmGrain))
+            if (volume.profile.TryGet(out FilmGrain filmGrain))
             {
                 filmGrain.intensity.value = proximity;
             }
         }
-        
+
     }
 
     public IEnumerator CheckValue()
     {
         yield return new WaitForSeconds(1.5f);
 
-        if(currentValue >= correctValue - correctValueSize && currentValue <= correctValue + correctValueSize)
+        if (currentValue >= correctValue - correctValueSize && currentValue <= correctValue + correctValueSize)
         {
-            if(volume.profile.TryGet(out FilmGrain filmGrain))
+            if (volume.profile.TryGet(out FilmGrain filmGrain))
             {
                 filmGrain.intensity.value = originalGrainIntensity;
                 filmGrain.type.value = FilmGrainLookup.Medium3;
