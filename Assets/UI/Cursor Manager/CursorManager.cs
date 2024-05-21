@@ -38,6 +38,7 @@ public class CursorManager : MonoBehaviour
     }
 
     [SerializeField] Sprite defaultCursor;
+    [SerializeField] Sprite defaultHoverCursor;
     [SerializeField] int sizeX;
     [SerializeField] int sizeY;
     [SerializeField] List<CustomCursor> customCursors = new List<CustomCursor>();
@@ -104,7 +105,6 @@ public class CursorManager : MonoBehaviour
     }
 
 
-
     void Start()
     {
         //SwitchToDefaultCursor();
@@ -150,8 +150,19 @@ public class CursorManager : MonoBehaviour
         cursorTexture = ResizeTexture(cursorTexture, sizeX, sizeY);
 
         Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.ForceSoftware);
-        Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.ForceSoftware);
-        Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.ForceSoftware);
+    }
+
+    public void SwitchToDefaultHoverCursor()
+    {
+        if (animatingCoroutine != null)
+        {
+            StopCoroutine(animatingCoroutine);
+            animatingCoroutine = null;
+        }
+        Texture2D cursorTexture = ConvertToTexture2D(defaultHoverCursor);
+        cursorTexture = ResizeTexture(cursorTexture, sizeX, sizeY);
+
+        Cursor.SetCursor(cursorTexture, new Vector2(2, 2), CursorMode.ForceSoftware);
     }
 
     public void SetCursorType(CursorType cursorType, float animationDelaySeconds)

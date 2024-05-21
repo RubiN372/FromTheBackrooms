@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
 {
     private void Awake()
     {
-        GameManager.instance.AddPlayer(gameObject);
         DontDestroyOnLoad(gameObject);
     }
 }
