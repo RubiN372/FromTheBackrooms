@@ -13,7 +13,7 @@ public class CursorManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
@@ -107,8 +107,6 @@ public class CursorManager : MonoBehaviour
 
     void Start()
     {
-        //SwitchToDefaultCursor();
-
         if (!m_Initialized)
         {
             m_Initialized = true;
@@ -135,6 +133,7 @@ public class CursorManager : MonoBehaviour
                 return i;
             }
         }
+
         return -1;
     }
 
@@ -159,6 +158,7 @@ public class CursorManager : MonoBehaviour
             StopCoroutine(animatingCoroutine);
             animatingCoroutine = null;
         }
+
         Texture2D cursorTexture = ConvertToTexture2D(defaultHoverCursor);
         cursorTexture = ResizeTexture(cursorTexture, sizeX, sizeY);
 
@@ -172,6 +172,7 @@ public class CursorManager : MonoBehaviour
             case CursorType.DefaultCursor:
                 SwitchToDefaultCursor();
                 break;
+
             case CursorType.LoadingCursor:
                 SwitchToDefaultCursor();
                 int cursorIndex = FindCursorByName("LoadingCursor");
@@ -184,7 +185,6 @@ public class CursorManager : MonoBehaviour
                 }
                 animatingCoroutine = StartCoroutine(AnimateCursor(customCursors[cursorIndex], animationDelaySeconds));
                 break;
-
         }
     }
 }
