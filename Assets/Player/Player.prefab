@@ -89,7 +89,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 1167432427, guid: 7bf03cdc38bedb94d8c4852054de3d84, type: 3}
-  m_Color: {r: 0.97051185, g: 1, b: 0.51320755, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -446,7 +446,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4234433822505873663
 Transform:
   m_ObjectHideFlags: 0
@@ -546,10 +546,10 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7272586380605745858}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: d8c376bd473cfac4da0930954de7219c, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 6c0ecaf13565539489848251b0173f90, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.115
   m_Pitch: 0.96735996
