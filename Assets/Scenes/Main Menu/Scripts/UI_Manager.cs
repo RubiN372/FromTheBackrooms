@@ -6,7 +6,8 @@ public class UI_Manager : MonoBehaviour
     public void PlayButton()
     {
         loadingCircle.SetActive(true);
-        Loader.LoadAsync(Loader.Scene.Prologue, true);
-        Loader.LoadAsync(Loader.Scene.PlayerScene, false);
+        Loader.LoadAsync(Loader.Scene.PlayerScene, true);
+        Loader.LoadAsync(Loader.Scene.Level_0, false);
+
     }
 }
