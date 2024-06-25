@@ -75,7 +75,10 @@ MonoBehaviour:
   m_Name: Heartbeat effect
   m_EditorClassIdentifier: 
   m_Active: 1
-  passMaterial: {fileID: 2100000, guid: 2f51e4eeb719ce344a245ea8d66577d0, type: 2}
   injectionPoint: 550
-  requirements: 4
+  fetchColorBuffer: 1
+  requirements: 0
+  passMaterial: {fileID: 2100000, guid: 2f51e4eeb719ce344a245ea8d66577d0, type: 2}
   passIndex: 0
+  bindDepthStencilAttachment: 0
+  m_Version: 1
