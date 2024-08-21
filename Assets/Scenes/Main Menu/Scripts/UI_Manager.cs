@@ -9,6 +9,5 @@ public class UI_Manager : MonoBehaviour
         loadingCircle.SetActive(true);
         Loader.LoadAsync(Loader.Scene.PlayerScene, true);
         Loader.LoadAsync(Loader.Scene.Level_0, false);
-
     }
 }

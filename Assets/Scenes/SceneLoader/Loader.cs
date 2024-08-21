@@ -27,4 +27,5 @@ public static class Loader
         else
             SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive);
     }
+
 }
