@@ -3,13 +3,19 @@ using UnityEngine;
 public class LevelTeleporter : MonoBehaviour
 {
     GameObject player;
+    bool pressed = false;
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.collider.gameObject.CompareTag("Player"))
+        if (!pressed)
         {
-            Loader.UnloadSceneAsync(Loader.Scene.Prologue);
-            Loader.LoadAsync(Loader.Scene.Level_0, false);
+            if (coll.collider.gameObject.CompareTag("Player"))
+            {
+                Loader.Instance.LoadScene(Loader.Scene.Level_0, Loader.Scene.Prologue);
+                pressed = true;
+            }
         }
+
+
     }
 }

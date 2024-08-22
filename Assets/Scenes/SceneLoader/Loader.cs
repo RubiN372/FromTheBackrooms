@@ -1,31 +1,98 @@
+using System.Collections;
+using System.ComponentModel;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class Loader
+public class Loader : MonoBehaviour
 {
+    #region Singleton
+    public static Loader Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+    #endregion
+
     public enum Scene
     {
         Main_Menu,
         PlayerScene,
         Prologue,
+        Loading_Screen,
         Level_0
     }
 
-    public static void UnloadSceneAsync(Scene scene)
+    public IEnumerator UnloadSceneAsync(Scene scene)
     {
-        SceneManager.UnloadSceneAsync(scene.ToString());
+        UnityEngine.AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(scene.ToString());
+
+        while (!asyncUnload.isDone)
+        {
+            yield return null;
+        }
     }
 
-    public static void Load(Scene scene)
+    public void LoadFromMenu()
     {
-        SceneManager.LoadScene(scene.ToString());
+        StartCoroutine(LoadInFromMainMenu());
     }
 
-    public static void LoadAsync(Scene scene, bool single)
+    public void LoadScene(Scene scene, Scene sceneToUnload)
     {
-        if (single)
-            SceneManager.LoadSceneAsync(scene.ToString());
-        else
-            SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive);
+        StartCoroutine(LoadAsync(scene, sceneToUnload));
+    }
+
+    private IEnumerator LoadInFromMainMenu()
+    {
+        UnityEngine.AsyncOperation asyncLoad;
+        UnityEngine.AsyncOperation asyncLoad2;
+
+        yield return StartCoroutine(LoadingScreenCanvasController.Instance.FadeTransition(1f, true));
+        asyncLoad = SceneManager.LoadSceneAsync("PlayerScene", LoadSceneMode.Single);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+            Debug.Log(asyncLoad.progress);
+        }
+
+        asyncLoad2 = SceneManager.LoadSceneAsync("Prologue", LoadSceneMode.Additive);
+        while (!asyncLoad2.isDone)
+        {
+            yield return null;
+        }
+        LoadingScreenCanvasController.Instance.FadeOut(1f);
+    }
+
+    private IEnumerator LoadAsync(Scene sceneToLoad, Scene sceneToUnload)
+    {
+        UnityEngine.AsyncOperation asyncUnload;
+        UnityEngine.AsyncOperation asyncLoad2;
+
+        yield return StartCoroutine(LoadingScreenCanvasController.Instance.FadeTransition(1f, true));
+        asyncUnload = SceneManager.UnloadSceneAsync(sceneToUnload.ToString());
+
+        while (!asyncUnload.isDone)
+        {
+            yield return null;
+            Debug.Log(asyncUnload.progress);
+        }
+
+        asyncLoad2 = SceneManager.LoadSceneAsync(sceneToLoad.ToString(), LoadSceneMode.Additive);
+        while (!asyncLoad2.isDone)
+        {
+            yield return null;
+        }
+        LoadingScreenCanvasController.Instance.FadeOut(1f);
     }
 
 }

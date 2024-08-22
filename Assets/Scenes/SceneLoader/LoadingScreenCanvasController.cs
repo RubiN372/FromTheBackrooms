@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +19,6 @@ public class LoadingScreenCanvasController : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            parentObject.SetActive(false);
         }
     }
     #endregion
@@ -27,6 +27,11 @@ public class LoadingScreenCanvasController : MonoBehaviour
     [SerializeField] GameObject parentObject;
 
     bool lerping = false;
+
+    public void FadeOut(float Fadetime)
+    {
+        StartCoroutine(FadeTransition(Fadetime, false));
+    }
 
 
     public IEnumerator FadeTransition(float fadeTime, bool fadeIn)
@@ -37,7 +42,6 @@ public class LoadingScreenCanvasController : MonoBehaviour
 
         if (fadeIn)
         {
-            Debug.Log("da");
             parentObject.SetActive(true);
             while (elapsedTime < fadeTime)
             {
@@ -45,6 +49,7 @@ public class LoadingScreenCanvasController : MonoBehaviour
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
+
 
         }
         else
