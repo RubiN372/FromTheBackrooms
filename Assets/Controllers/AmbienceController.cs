@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class Ambience : MonoBehaviour
 {
-    [SerializeField] private AudioSource audioSource;
+    public AudioSource audioSource;
     [SerializeField] private float defaultPitch;
     [SerializeField] private float minPitch;
     [SerializeField] private float maxPitch;
     [SerializeField] private float speed;
+
+    enum AmbienceList
+    {
+        Level_0
+
+
+    }
 
     private float t = 0;
     private float newPitch;

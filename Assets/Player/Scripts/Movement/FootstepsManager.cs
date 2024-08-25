@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class FootstepsManager : MonoBehaviour
@@ -10,7 +11,9 @@ public class FootstepsManager : MonoBehaviour
     [SerializeField] ParticleSystem dust;
 
     Vector3 lastPos;
-    float distanceTravelled;
+    public float distanceTravelled;
+    int frameSkipNumb = 2;
+    int frameSkipCounter = 0;
 
     void Start()
     {
@@ -18,8 +21,17 @@ public class FootstepsManager : MonoBehaviour
         distanceTravelled = 0;
     }
 
+
     void Update()
     {
+
+        if (frameSkipCounter < frameSkipNumb)
+        {
+            frameSkipCounter++;
+            distanceTravelled = 0;
+            lastPos = transform.position;
+            return;
+        }
         distanceTravelled += (lastPos - transform.position).magnitude;
 
         if (distanceTravelled >= distanceToMakeSound)
@@ -39,5 +51,6 @@ public class FootstepsManager : MonoBehaviour
         }
 
         lastPos = transform.position;
+
     }
 }
