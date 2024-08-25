@@ -415,6 +415,7 @@ MonoBehaviour:
   volume: 0.08
   staminaController: {fileID: 2355027243389661913}
   dust: {fileID: 3736308769481943869}
+  distanceTravelled: 0
 --- !u!1 &4449339114772829879
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,6 +640,9 @@ MonoBehaviour:
   minPitch: 0.96
   maxPitch: 1.05
   speed: 0.065
+  ambienceList:
+  - {fileID: 8300000, guid: 70b03104b5f2f2d4b9890dbfff9b2a27, type: 3}
+  - {fileID: 8300000, guid: 6c0ecaf13565539489848251b0173f90, type: 3}
 --- !u!1 &8760489109598507710
 GameObject:
   m_ObjectHideFlags: 0

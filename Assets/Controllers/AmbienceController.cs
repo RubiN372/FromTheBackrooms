@@ -9,12 +9,27 @@ public class Ambience : MonoBehaviour
     [SerializeField] private float minPitch;
     [SerializeField] private float maxPitch;
     [SerializeField] private float speed;
-
-    enum AmbienceList
+    [SerializeField] AudioClip[] ambienceList;
+    public enum AmbienceList
     {
+        Prologue,
         Level_0
+    }
 
-
+    public void SwitchAmbience(AmbienceList ambience, float volume)
+    {
+        audioSource.volume = volume;
+        switch (ambience.ToString())
+        {
+            case "Prologue":
+                audioSource.clip = ambienceList[0];
+                audioSource.Play();
+                break;
+            case "Level_0":
+                audioSource.clip = ambienceList[1];
+                audioSource.Play();
+                break;
+        }
     }
 
     private float t = 0;

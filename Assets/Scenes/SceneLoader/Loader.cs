@@ -48,26 +48,26 @@ public class Loader : MonoBehaviour
         StartCoroutine(LoadInFromMainMenu());
     }
 
-    public void LoadScene(Scene scene, Scene sceneToUnload, Vector2 playerTeleportPos)
+    public void LoadScene(Scene scene, Scene sceneToUnload, Vector2 playerTeleportPos, Ambience.AmbienceList ambienceType, float ambienceVolume)
     {
-        StartCoroutine(LoadAsync(scene, sceneToUnload, playerTeleportPos));
+        StartCoroutine(LoadAsync(scene, sceneToUnload, playerTeleportPos, ambienceType, ambienceVolume));
     }
 
     private IEnumerator LoadInFromMainMenu()
     {
         UnityEngine.AsyncOperation asyncLoad;
         UnityEngine.AsyncOperation asyncLoad2;
-        float progress = 0f;
-
         yield return StartCoroutine(LoadingScreenCanvasController.Instance.FadeTransition(1f, true));
         asyncLoad = SceneManager.LoadSceneAsync("PlayerScene", LoadSceneMode.Single);
 
+        float progress;
         while (!asyncLoad.isDone)
         {
             progress = asyncLoad.progress / 2;
             progressSlider.value = progress;
             yield return null;
         }
+        GameManager.instance.ambience.SwitchAmbience(Ambience.AmbienceList.Prologue, 0.025f);
         GameManager.instance.player.transform.position = new Vector2(0, 0);
         GameManager.instance.cinemachine.PreviousStateIsValid = false;
 
@@ -81,7 +81,7 @@ public class Loader : MonoBehaviour
         LoadingScreenCanvasController.Instance.FadeOut(1f);
     }
 
-    private IEnumerator LoadAsync(Scene sceneToLoad, Scene sceneToUnload, Vector2 playerTeleportPos)
+    private IEnumerator LoadAsync(Scene sceneToLoad, Scene sceneToUnload, Vector2 playerTeleportPos, Ambience.AmbienceList ambienceType, float ambienceVolume)
     {
         float progress = 0f;
         AudioSource ambience = GameManager.instance.ambience.audioSource;
@@ -106,6 +106,7 @@ public class Loader : MonoBehaviour
         GetComponent<AudioListener>().enabled = true;
         GameManager.instance.player.GetComponent<PlayerMovement>().enabled = false;
         GameManager.instance.player.transform.position = playerTeleportPos;
+        GameManager.instance.cinemachine.PreviousStateIsValid = false;
 
         asyncLoad2 = SceneManager.LoadSceneAsync(sceneToLoad.ToString(), LoadSceneMode.Additive);
         while (!asyncLoad2.isDone)
@@ -118,6 +119,7 @@ public class Loader : MonoBehaviour
         progress = 0.5f + asyncLoad2.progress / 2;
         progressSlider.value = progress;
 
+        GameManager.instance.ambience.SwitchAmbience(ambienceType, ambienceVolume);
         GetComponent<AudioListener>().enabled = false;
         GameManager.instance.player.GetComponent<AudioListener>().enabled = true;
         GameManager.instance.player.GetComponent<PlayerMovement>().enabled = true;

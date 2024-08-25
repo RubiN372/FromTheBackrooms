@@ -11,7 +11,7 @@ public class LevelTeleporter : MonoBehaviour
         {
             if (coll.collider.gameObject.CompareTag("Player"))
             {
-                Loader.Instance.LoadScene(Loader.Scene.Level_0, Loader.Scene.Prologue, new Vector2(-139.95f, -76.768f));
+                Loader.Instance.LoadScene(Loader.Scene.Level_0, Loader.Scene.Prologue, new Vector2(-139.95f, -76.768f), Ambience.AmbienceList.Level_0, 0.1f);
                 pressed = true;
             }
         }
