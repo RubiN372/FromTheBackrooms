@@ -19,7 +19,7 @@ public class SmilerAI : MonoBehaviour
     [SerializeField] private float nextWaypointDistance = 3f;
     [SerializeField] private float detectRange = 5f;
     [SerializeField] private SmilerAnimationController smilerAnimationController;
-    [SerializeField] private JumpscareController jumpscareController;
+    private JumpscareController jumpscareController;
     [SerializeField] private Sprite jumpscareFaceSprite;
     [SerializeField] private Vector3 jumpscareMinScale;
     [SerializeField] private Vector3 jumpscareMaxScale;
@@ -43,6 +43,7 @@ public class SmilerAI : MonoBehaviour
         playerLayer = LayerMask.GetMask("Player");
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
+        jumpscareController = GameManager.instance.jumpscareController;
 
         InvokeRepeating("UpdatePath", 0f, 0.2f);
     }

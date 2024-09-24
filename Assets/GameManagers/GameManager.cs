@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public GameObject uiCanvas;
     public Ambience ambience;
+    public JumpscareController jumpscareController;
     public void AddPlayer(GameObject newPlayer)
     {
         players.Add(newPlayer);

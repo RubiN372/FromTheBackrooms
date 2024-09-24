@@ -17,11 +17,16 @@ public class InventoryUI : MonoBehaviour
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
     }
 
+    public void CloseInventoryUI()
+    {
+        inventoryUI.SetActive(!inventoryUI.activeSelf);
+    }
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            inventoryUI.SetActive(!inventoryUI.activeSelf);
+            CloseInventoryUI();
         }
     }
 

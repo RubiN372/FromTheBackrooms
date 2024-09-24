@@ -6,7 +6,7 @@ public class PauseUIController : MonoBehaviour
     [SerializeField] GameObject ambience;
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] InventoryUI inventoryUI;
-    public static bool isPaused {get; private set;} = false;
+    public static bool isPaused { get; private set; } = false;
     public static bool canPause = true;
 
     void Start()
@@ -17,36 +17,39 @@ public class PauseUIController : MonoBehaviour
     private void SetActiveComponents(bool enabled)
     {
         ambience.SetActive(enabled);
-        playerMovement.enabled = this.enabled;
-        inventoryUI.enabled = this.enabled;
+        playerMovement.enabled = enabled;
+        inventoryUI.enabled = enabled;
     }
 
 
     public void Resume()
     {
-         isPaused = false;
+        isPaused = false;
         pauseUI.SetActive(false);
         SetActiveComponents(true);
         Time.timeScale = 1f;
     }
     public void Pause()
     {
-        if(!canPause)
+        if (!canPause)
             return;
         isPaused = true;
         pauseUI.SetActive(true);
         SetActiveComponents(false);
         Time.timeScale = 0f;
+        inventoryUI.CloseInventoryUI();
     }
-    
+
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(isPaused == false)
+            if (isPaused == false)
             {
                 Pause();
-            }else{
+            }
+            else
+            {
                 Resume();
             }
         }
