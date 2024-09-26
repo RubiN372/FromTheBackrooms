@@ -8,6 +8,7 @@ public class InventoryUI : MonoBehaviour
     Inventory inventory;
     InventorySlot[] slots;
     public GameObject inventoryUI;
+    public bool isOpen = false;
 
     private void Start()
     {
@@ -17,16 +18,17 @@ public class InventoryUI : MonoBehaviour
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
     }
 
-    public void CloseInventoryUI()
+    public void ChangeUIVisibility(bool isShown)
     {
-        inventoryUI.SetActive(!inventoryUI.activeSelf);
+        inventoryUI.SetActive(isShown);
+        isOpen = isShown;
     }
 
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            CloseInventoryUI();
+            ChangeUIVisibility(!isOpen);
         }
     }
 

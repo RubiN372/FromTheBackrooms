@@ -239,6 +239,18 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7158253095083931770, guid: d82f91d8bca81dc4a9512d19647d6f06, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7158253095083931770, guid: d82f91d8bca81dc4a9512d19647d6f06, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7158253095083931770, guid: d82f91d8bca81dc4a9512d19647d6f06, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7158253095083931770, guid: d82f91d8bca81dc4a9512d19647d6f06, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -286,6 +298,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7158253095083931770, guid: d82f91d8bca81dc4a9512d19647d6f06, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7291364586806089405, guid: d82f91d8bca81dc4a9512d19647d6f06, type: 3}
+      propertyPath: sizeX
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7291364586806089405, guid: d82f91d8bca81dc4a9512d19647d6f06, type: 3}
+      propertyPath: sizeY
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7291364586806089405, guid: d82f91d8bca81dc4a9512d19647d6f06, type: 3}
+      propertyPath: defaultHoverCursor
+      value: 
+      objectReference: {fileID: 21300000, guid: 54ad83cb7b5ba114fb08ea64b91c916c, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -389,7 +417,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6555340155980283289, guid: f86d3ef593d0bca478ffe8869d178b07, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669433713022085457, guid: f86d3ef593d0bca478ffe8869d178b07, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8164759562383743017, guid: f86d3ef593d0bca478ffe8869d178b07, type: 3}
       propertyPath: hungerThirst

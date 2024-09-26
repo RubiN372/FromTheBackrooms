@@ -8,6 +8,7 @@ public class PauseUIController : MonoBehaviour
     [SerializeField] InventoryUI inventoryUI;
     public static bool isPaused { get; private set; } = false;
     public static bool canPause = true;
+    private bool wasInventoryOpen = false;
 
     void Start()
     {
@@ -18,7 +19,6 @@ public class PauseUIController : MonoBehaviour
     {
         ambience.SetActive(enabled);
         playerMovement.enabled = enabled;
-        inventoryUI.enabled = enabled;
     }
 
 
@@ -27,6 +27,7 @@ public class PauseUIController : MonoBehaviour
         isPaused = false;
         pauseUI.SetActive(false);
         SetActiveComponents(true);
+        inventoryUI.ChangeUIVisibility(wasInventoryOpen);
         Time.timeScale = 1f;
     }
     public void Pause()
@@ -37,7 +38,8 @@ public class PauseUIController : MonoBehaviour
         pauseUI.SetActive(true);
         SetActiveComponents(false);
         Time.timeScale = 0f;
-        inventoryUI.CloseInventoryUI();
+        wasInventoryOpen = inventoryUI.isOpen;
+        inventoryUI.ChangeUIVisibility(false);
     }
 
     void Update()
