@@ -3,7 +3,6 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.Tilemaps;
 
 
 
@@ -16,7 +15,6 @@ public class ShadowCaster2DCreator : MonoBehaviour
 	private bool selfShadows = true;
 
 	private CompositeCollider2D tilemapCollider;
-	public Tilemap tilemap;
 
 	static readonly FieldInfo meshField = typeof(ShadowCaster2D).GetField("m_Mesh", BindingFlags.NonPublic | BindingFlags.Instance);
 	static readonly FieldInfo shapePathField = typeof(ShadowCaster2D).GetField("m_ShapePath", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -25,11 +23,6 @@ public class ShadowCaster2DCreator : MonoBehaviour
 									.Assembly
 									.GetType("UnityEngine.Rendering.Universal.ShadowUtility")
 									.GetMethod("GenerateShadowMesh", BindingFlags.Public | BindingFlags.Static);
-
-
-
-
-
 
 	public void Create()
 	{
@@ -41,11 +34,6 @@ public class ShadowCaster2DCreator : MonoBehaviour
 			Vector2[] pathVertices = new Vector2[tilemapCollider.GetPathPointCount(i)];
 			tilemapCollider.GetPath(i, pathVertices);
 			GameObject shadowCaster = new GameObject("shadow_caster_" + i);
-
-			Vector3[] points = new Vector3[tilemapCollider.GetPathPointCount(i)];
-			shadowCaster.transform.TransformPoints(points);
-			Debug.Log(points);
-
 			shadowCaster.transform.parent = gameObject.transform;
 			ShadowCaster2D shadowCasterComponent = shadowCaster.AddComponent<ShadowCaster2D>();
 			shadowCasterComponent.selfShadows = this.selfShadows;
@@ -59,12 +47,10 @@ public class ShadowCaster2DCreator : MonoBehaviour
 			shapePathField.SetValue(shadowCasterComponent, testPath);
 			shapePathHashField.SetValue(shadowCasterComponent, Random.Range(int.MinValue, int.MaxValue));
 			meshField.SetValue(shadowCasterComponent, new Mesh());
-			generateShadowMeshMethod.Invoke(shadowCasterComponent, new object[] { meshField.GetValue(shadowCasterComponent), shapePathField.GetValue(shadowCasterComponent) });
-
-
+			generateShadowMeshMethod.Invoke(shadowCasterComponent,
+			new object[] { meshField.GetValue(shadowCasterComponent), shapePathField.GetValue(shadowCasterComponent) });
 		}
 	}
-
 	public void DestroyOldShadowCasters()
 	{
 
@@ -101,3 +87,4 @@ public class ShadowCaster2DTileMapEditor : Editor
 }
 
 #endif
+

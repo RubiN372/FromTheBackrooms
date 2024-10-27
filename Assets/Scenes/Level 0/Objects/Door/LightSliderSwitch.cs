@@ -40,7 +40,7 @@ public class LightSliderSwitch : MonoBehaviour
             uiIsActive = true;
             PauseUIController.canPause = false;
             GameManager.instance.player.GetComponent<PlayerMovement>().enabled = false;
-            GameManager.instance.player.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            GameManager.instance.player.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0, 0);
 
             if (volume.profile.TryGet(out FilmGrain filmGrain))
             {

@@ -42,12 +42,12 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("Sprinting", false);
         }
 
-        rb.velocity = movement;
+        rb.linearVelocity = movement;
 
         animator.SetFloat("Speed", movement.sqrMagnitude);
 
-        animator.SetFloat("Velocity X", rb.velocity.x);
-        animator.SetFloat("Velocity Y", rb.velocity.y);
+        animator.SetFloat("Velocity X", rb.linearVelocity.x);
+        animator.SetFloat("Velocity Y", rb.linearVelocity.y);
 
     }
 }

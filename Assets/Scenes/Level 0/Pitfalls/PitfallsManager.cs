@@ -105,7 +105,7 @@ public class PitfallsManager : MonoBehaviour
     private void Fall()
     {
         player.GetComponent<BoxCollider2D>().enabled = false;
-        player.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        player.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0, 0);
         StopMinigame(false);
         animator.SetTrigger("Fall");
         SoundInstance.InstantiateOnTransform(gasp, transform, 2f, true, SoundInstance.Randomization.Low);
@@ -160,7 +160,7 @@ public class PitfallsManager : MonoBehaviour
         minigameStarted = true;
         Debug.Log("start pitfalls");
         player.GetComponent<PlayerMovement>().enabled = false;
-        player.GetComponent<Rigidbody2D>().velocity = new Vector2(0, walkingSpeed);
+        player.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0, walkingSpeed);
 
         animator.SetBool("Balancing", true);
         animator.SetFloat("Balancing Velocity", animationSpeed);

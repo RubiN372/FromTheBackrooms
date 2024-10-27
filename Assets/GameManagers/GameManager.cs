@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Cinemachine;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     private List<GameObject> players = new List<GameObject>();
-    public CinemachineVirtualCamera cinemachine;
+    public CinemachineCamera cinemachine;
     public GameObject player;
     public GameObject uiCanvas;
     public Ambience ambience;

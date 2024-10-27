@@ -177,9 +177,9 @@ public class SmilerAI : MonoBehaviour
         Vector2 force = acceleration * Time.deltaTime * direction.normalized;
 
         rb.AddForce(force);
-        if (rb.velocity.magnitude > speed)
+        if (rb.linearVelocity.magnitude > speed)
         {
-            rb.velocity = Vector3.ClampMagnitude(rb.velocity, speed);
+            rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, speed);
         }
 
         float distance = Vector2.Distance(rb.position, currentPath.vectorPath[currentWaypoint]);

@@ -83,9 +83,9 @@ public class MonsterEnemyAI : MonoBehaviour
         Vector2 force = direction * acceleration * Time.deltaTime;
 
         rb.AddForce(force);
-        if (rb.velocity.magnitude > maxSpeed)
+        if (rb.linearVelocity.magnitude > maxSpeed)
         {
-            rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+            rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, maxSpeed);
         }
 
         float distance = Vector2.Distance(rb.position, currentPath.vectorPath[currentWaypoint]);

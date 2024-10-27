@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using Cinemachine;
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerTeleport : MonoBehaviour
 {
     [SerializeField] Transform teleportPos;
-    [SerializeField] CinemachineVirtualCamera cmVCam;
+    [SerializeField][System.Obsolete] CinemachineVirtualCamera cmVCam;
     [SerializeField] Vector2 teleportOffset;
     [SerializeField] int howManyToActivate;
     [SerializeField] bool deactivateAfterTeleport;
@@ -27,9 +27,9 @@ public class PlayerTeleport : MonoBehaviour
 
             Vector2 delta = newTeleportPos.position - player.transform.position;
             player.transform.position = newTeleportPos.position;
-            int numVcams = CinemachineCore.Instance.VirtualCameraCount;
+            int numVcams = CinemachineCore.VirtualCameraCount;
             for (int i = 0; i < numVcams; ++i)
-                CinemachineCore.Instance.GetVirtualCamera(i).OnTargetObjectWarped(player.transform, delta);
+                CinemachineCore.GetVirtualCamera(i).OnTargetObjectWarped(player.transform, delta);
         }
 
     }

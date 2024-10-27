@@ -16,9 +16,9 @@ public class MonsterEnemyGFX : MonoBehaviour
   private void Update()
   {
 
-    speed = rb.velocity.sqrMagnitude;
+    speed = rb.linearVelocity.sqrMagnitude;
     animator.SetFloat("Speed", speed);
-    animator.SetFloat("Velocity X", rb.velocity.x);
-    animator.SetFloat("Velocity Y", rb.velocity.y);
+    animator.SetFloat("Velocity X", rb.linearVelocity.x);
+    animator.SetFloat("Velocity Y", rb.linearVelocity.y);
   }
 }

@@ -19,9 +19,9 @@ public class SI_MusicHandler : MonoBehaviour
 
     private void Awake()
     {
-        foreach(GameObject go in UnityEngine.Object.FindObjectsOfType<GameObject>())
+        foreach (GameObject go in Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None))
         {
-            if(go.name == "[SoundInstanceMusicLive]")
+            if (go.name == "[SoundInstanceMusicLive]")
             {
                 Destroy(gameObject);
                 return;
@@ -42,7 +42,7 @@ public class SI_MusicHandler : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -53,7 +53,7 @@ public class SI_MusicHandler : MonoBehaviour
              {
                  audioSource.volume = 
              }*/
-            
+
             //OnMusicFinished
 
 
@@ -72,7 +72,7 @@ public class SI_MusicHandler : MonoBehaviour
         audioSource.clip = audioClip;
         StartCoroutine(Play(1 / fadeSpeed));
 
-        foreach (GameObject go in UnityEngine.Object.FindObjectsOfType<GameObject>())
+        foreach (GameObject go in Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None))
         {
             SoundInstance.CurrentMusic = Storage.GetMusic(name);
             go.SendMessage("OnMusicStarted", Storage.GetMusic(name), SendMessageOptions.DontRequireReceiver);
@@ -128,7 +128,7 @@ public class SI_MusicHandler : MonoBehaviour
         }
         audioSource.Stop();
 
-        foreach (GameObject go in UnityEngine.Object.FindObjectsOfType<GameObject>())
+        foreach (GameObject go in Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None))
         {
             go.SendMessage("OnMusicStopped", SendMessageOptions.DontRequireReceiver);
         }
@@ -137,7 +137,7 @@ public class SI_MusicHandler : MonoBehaviour
         audioSource.clip = audioClip;
 
         SoundInstance.CurrentMusic = Storage.GetMusic(name);
-        foreach (GameObject go in UnityEngine.Object.FindObjectsOfType<GameObject>())
+        foreach (GameObject go in Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None))
         {
             go.SendMessage("OnMusicStarted", Storage.GetMusic(name), SendMessageOptions.DontRequireReceiver);
         }
@@ -160,7 +160,7 @@ public class SI_MusicHandler : MonoBehaviour
         }
         audioSource.Stop();
 
-        foreach (GameObject go in UnityEngine.Object.FindObjectsOfType<GameObject>())
+        foreach (GameObject go in Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None))
         {
             go.SendMessage("OnMusicStopped", SendMessageOptions.DontRequireReceiver);
         }
@@ -180,7 +180,7 @@ public class SI_MusicHandler : MonoBehaviour
         }
         audioSource.Pause();
 
-        foreach (GameObject go in UnityEngine.Object.FindObjectsOfType<GameObject>())
+        foreach (GameObject go in Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None))
         {
             go.SendMessage("OnMusicPaused", SendMessageOptions.DontRequireReceiver);
         }
@@ -192,7 +192,7 @@ public class SI_MusicHandler : MonoBehaviour
         float currentTime = 0;
         float start = audioSource.volume;
 
-        foreach (GameObject go in UnityEngine.Object.FindObjectsOfType<GameObject>())
+        foreach (GameObject go in Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None))
         {
             go.SendMessage("OnMusicResume", SendMessageOptions.DontRequireReceiver);
         }
@@ -209,12 +209,12 @@ public class SI_MusicHandler : MonoBehaviour
 
     public Music GetNextMusic()
     {
-        if(SoundInstance.CurrentMusic == null)
+        if (SoundInstance.CurrentMusic == null)
         {
             return Storage.GetMusicByIndex(0);
         }
 
-        if(!(Storage.GetMusicByIndex(Storage.GetMusicIndex(SoundInstance.CurrentMusic) + 1) == null))
+        if (!(Storage.GetMusicByIndex(Storage.GetMusicIndex(SoundInstance.CurrentMusic) + 1) == null))
         {
             return Storage.GetMusicByIndex(Storage.GetMusicIndex(SoundInstance.CurrentMusic) + 1);
         }
