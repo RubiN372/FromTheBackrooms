@@ -13,17 +13,17 @@ public class PlayerTeleport : MonoBehaviour
     [SerializeField] bool deactivateAfterTeleport;
     int activatedCount = 0;
 
-    
+
     // seamless player teleportation to different location
     public void OnTriggerEnter2D(Collider2D other)
     {
         activatedCount++;
-        if(activatedCount == howManyToActivate)
+        if (activatedCount == howManyToActivate)
         {
-             GameObject player = GameManager.instance.player;
+            GameObject player = GameManager.instance.player;
 
-            Transform newTeleportPos = teleportPos; 
-            newTeleportPos.position = new Vector2(player.transform.position.x + teleportOffset.x , player.transform.position.y + teleportOffset.y);
+            Transform newTeleportPos = teleportPos;
+            newTeleportPos.position = new Vector2(player.transform.position.x + teleportOffset.x, player.transform.position.y + teleportOffset.y);
 
             Vector2 delta = newTeleportPos.position - player.transform.position;
             player.transform.position = newTeleportPos.position;
@@ -31,6 +31,6 @@ public class PlayerTeleport : MonoBehaviour
             for (int i = 0; i < numVcams; ++i)
                 CinemachineCore.Instance.GetVirtualCamera(i).OnTargetObjectWarped(player.transform, delta);
         }
-       
+
     }
 }

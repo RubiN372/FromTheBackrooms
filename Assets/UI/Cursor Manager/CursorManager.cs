@@ -9,6 +9,7 @@ public class CursorManager : MonoBehaviour
     #region Singleton
     public static CursorManager Instance { get; private set; }
 
+    [SerializeField] private Vector2 baseResolution = new Vector2(2560, 1440);
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -87,6 +88,15 @@ public class CursorManager : MonoBehaviour
 
     void CacheTexturesOnStart()
     {
+        // Calculate scale factor based on current resolution
+        float widthScaleFactor = Screen.width / baseResolution.x;
+        float heightScaleFactor = Screen.height / baseResolution.y;
+        float scaleFactor = Mathf.Min(widthScaleFactor, heightScaleFactor);
+
+        // Scale the sizeX and sizeY accordingly
+        int scaledSizeX = Mathf.RoundToInt(sizeX * scaleFactor);
+        int scaledSizeY = Mathf.RoundToInt(sizeY * scaleFactor);
+
         for (int i = 0; i < customCursors.Count; i++)
         {
             CustomCursor currentCursor = customCursors[i];
@@ -96,7 +106,7 @@ public class CursorManager : MonoBehaviour
             for (int j = 0; j < currentCursor.cursorImages.Length; j++)
             {
                 Texture2D upScaledTexture = ConvertToTexture2D(currentCursor.cursorImages[j]);
-                upScaledTexture = ResizeTexture(upScaledTexture, sizeX, sizeY);
+                upScaledTexture = ResizeTexture(upScaledTexture, scaledSizeX, scaledSizeY);  // Use scaled sizes
                 currentCursor.cachedImages[j] = upScaledTexture;
             }
 
