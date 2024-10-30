@@ -33,7 +33,7 @@ public class LoadingScreenCanvasController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    bool lerping = false;
+    //bool lerping = false;
 
     public void FadeOut(float Fadetime)
     {
@@ -62,7 +62,7 @@ public class LoadingScreenCanvasController : MonoBehaviour
 
     public IEnumerator FadeTransition(float fadeTime, bool fadeIn)
     {
-        lerping = true;
+        //lerping = true;
         float elapsedTime = 0;
         GetComponent<AudioSource>().Play();
 
@@ -99,7 +99,7 @@ public class LoadingScreenCanvasController : MonoBehaviour
             parentObject.SetActive(false);
         }
 
-        lerping = false;
+        //lerping = false;
         StartCoroutine(FadeOutAudio(1f));
     }
 }

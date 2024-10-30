@@ -87,4 +87,3 @@ public class ShadowCaster2DTileMapEditor : Editor
 }
 
 #endif
-

@@ -9,6 +9,7 @@ public class MEGDocument : Item
     {
         base.Use();
         GameManager.instance.GetViewedObject().ViewObject(paperUISprite, sixeX, sizeY);
+        Debug.Log("tutaj dziala");
     }
 
     public override GameObject Drop()
