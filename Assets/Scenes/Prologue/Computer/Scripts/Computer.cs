@@ -3,7 +3,8 @@ using UnityEngine.UI;
 public class Computer : MonoBehaviour
 {
     [SerializeField] GameObject monitor;
-    bool isOn = false;
+
+    public bool isOn = false;
 
     public void LaunchPC()
     {
