@@ -7,30 +7,32 @@ using UnityEngine;
 public class PlayerTeleport : MonoBehaviour
 {
     [SerializeField] Transform teleportPos;
-    [SerializeField][System.Obsolete] CinemachineVirtualCamera cmVCam;
     [SerializeField] Vector2 teleportOffset;
     [SerializeField] int howManyToActivate;
-    [SerializeField] bool deactivateAfterTeleport;
     int activatedCount = 0;
+
+    bool isEnabled = true;
 
 
     // seamless player teleportation to different location
     public void OnTriggerEnter2D(Collider2D other)
     {
-        activatedCount++;
-        if (activatedCount == howManyToActivate)
+        if (isEnabled)
         {
-            GameObject player = GameManager.instance.player;
+            activatedCount++;
+            if (activatedCount == howManyToActivate)
+            {
+                GameObject player = GameManager.instance.player;
 
-            Transform newTeleportPos = teleportPos;
-            newTeleportPos.position = new Vector2(player.transform.position.x + teleportOffset.x, player.transform.position.y + teleportOffset.y);
+                Transform newTeleportPos = teleportPos;
+                newTeleportPos.position = new Vector2(player.transform.position.x + teleportOffset.x, player.transform.position.y + teleportOffset.y);
 
-            Vector2 delta = newTeleportPos.position - player.transform.position;
-            player.transform.position = newTeleportPos.position;
-            int numVcams = CinemachineCore.VirtualCameraCount;
-            for (int i = 0; i < numVcams; ++i)
-                CinemachineCore.GetVirtualCamera(i).OnTargetObjectWarped(player.transform, delta);
+                Vector2 delta = newTeleportPos.position - player.transform.position;
+                player.transform.position = newTeleportPos.position;
+                int numVcams = CinemachineCore.VirtualCameraCount;
+                for (int i = 0; i < numVcams; ++i)
+                    CinemachineCore.GetVirtualCamera(i).OnTargetObjectWarped(player.transform, delta);
+            }
         }
-
     }
 }

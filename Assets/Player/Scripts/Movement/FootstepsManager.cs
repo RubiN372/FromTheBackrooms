@@ -21,6 +21,11 @@ public class FootstepsManager : MonoBehaviour
         distanceTravelled = 0;
     }
 
+    public void AddFramesToSkip(int framesToSkip)
+    {
+        frameSkipCounter = framesToSkip;
+    }
+
 
     void Update()
     {

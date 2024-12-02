@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class LevelTeleporter : MonoBehaviour
 {
-    GameObject player;
     bool pressed = false;
 
     void OnCollisionEnter2D(Collision2D coll)
@@ -11,7 +10,7 @@ public class LevelTeleporter : MonoBehaviour
         {
             if (coll.collider.gameObject.CompareTag("Player"))
             {
-                Loader.Instance.LoadScene(Loader.Scene.Level_0, Loader.Scene.Prologue, new Vector2(-136.82f, -76.32f), Ambience.AmbienceList.Level_0, 0.1f);
+                Loader.Instance.LoadScene(Loader.Scene.Level_0, Loader.Scene.Prologue, new Vector2(-139.94f, -76.81f), Ambience.AmbienceList.Level_0, 0.1f);
                 pressed = true;
             }
         }
