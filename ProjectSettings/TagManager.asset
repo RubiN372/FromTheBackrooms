@@ -45,6 +45,9 @@ TagManager:
   - name: Environment
     uniqueID: 2767642599
     locked: 0
+  - name: UV Layer
+    uniqueID: 1818662455
+    locked: 0
   - name: UI
     uniqueID: 2262315571
     locked: 0

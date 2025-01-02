@@ -8,7 +8,7 @@ public class PitfallsManager : MonoBehaviour
 {
     public bool minigameStarted = false;
     [SerializeField] Collider2D blockingCollider;
-    [SerializeField] Vector2 teleportPos;
+    [SerializeField] Transform teleportPos;
     [SerializeField] float walkingSpeed;
     [SerializeField] float animationSpeed;
     [SerializeField] GameObject pitfallsUIprefab;
@@ -116,7 +116,7 @@ public class PitfallsManager : MonoBehaviour
     IEnumerator TeleportDelay()
     {
         yield return new WaitForSeconds(1);
-        GameManager.instance.player.transform.position = teleportPos;
+        GameManager.instance.player.transform.position = teleportPos.position;
         player.GetComponent<PlayerMovement>().enabled = true;
     }
 
