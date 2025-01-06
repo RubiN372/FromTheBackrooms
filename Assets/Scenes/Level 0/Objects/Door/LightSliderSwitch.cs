@@ -22,13 +22,16 @@ public class LightSliderSwitch : MonoBehaviour
     private float currentValue;
     private float originalGrainIntensity;
     private float originalResponse;
+    private float originalContrast;
+    private Coroutine checkValueCoroutine;
 
     void Start()
     {
-        if (volume.profile.TryGet(out FilmGrain filmGrain))
+        if (volume.profile.TryGet(out FilmGrain filmGrain) && volume.profile.TryGet(out ColorAdjustments colorAdjustments))
         {
             originalGrainIntensity = filmGrain.intensity.value;
             originalResponse = filmGrain.response.value;
+            originalContrast = colorAdjustments.contrast.value;
         }
     }
 
@@ -58,9 +61,23 @@ public class LightSliderSwitch : MonoBehaviour
                 currentValue = sliderUIprefab.GetComponentInChildren<Slider>().value;
 
             if (currentValue >= correctValue - correctValueSize && currentValue <= correctValue + correctValueSize)
-                StartCoroutine(CheckValue());
+            {
+                if (checkValueCoroutine == null)
+                {
+                    checkValueCoroutine = StartCoroutine(CheckValue());
+                }
+            }
             else
-                StopCoroutine(CheckValue());
+            {
+                if (checkValueCoroutine != null)
+                {
+                    StopCoroutine(checkValueCoroutine);
+                    checkValueCoroutine = null;
+                }
+
+            }
+
+            Debug.Log(checkValueCoroutine);
 
             float proximity = 1f - Mathf.Abs(currentValue - correctValue);
             audioSource.volume = proximity;
@@ -72,10 +89,12 @@ public class LightSliderSwitch : MonoBehaviour
                 PauseUIController.canPause = true;
                 GameManager.instance.player.GetComponent<PlayerMovement>().enabled = true;
             }
-            if (volume.profile.TryGet(out FilmGrain filmGrain))
+            if (volume.profile.TryGet(out FilmGrain filmGrain) && volume.profile.TryGet(out ColorAdjustments colorAdjustments))
             {
                 filmGrain.intensity.value = proximity;
+                colorAdjustments.contrast.value = proximity * 30f;
             }
+
         }
 
     }
@@ -86,11 +105,12 @@ public class LightSliderSwitch : MonoBehaviour
 
         if (currentValue >= correctValue - correctValueSize && currentValue <= correctValue + correctValueSize)
         {
-            if (volume.profile.TryGet(out FilmGrain filmGrain))
+            if (volume.profile.TryGet(out FilmGrain filmGrain) && volume.profile.TryGet(out ColorAdjustments colorAdjustments))
             {
                 filmGrain.intensity.value = originalGrainIntensity;
                 filmGrain.type.value = FilmGrainLookup.Medium3;
                 filmGrain.response.value = originalResponse;
+                colorAdjustments.contrast.value = originalContrast;
             }
             lightBulb.SetActive(false);
             doorBlockingWall.SetActive(false);
