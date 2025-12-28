@@ -51,9 +51,8 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "FromTheBackrooms.sln",
+    "dotnet.defaultSolution": "FromTheBackrooms.slnx",
     "background.customImages": [
-    "file:///C:/Users/anany/Desktop/Stuff/pxfuel.jpg"
+        "file:///C:/Users/anany/Desktop/Stuff/pxfuel.jpg"
     ]
-    
 }
